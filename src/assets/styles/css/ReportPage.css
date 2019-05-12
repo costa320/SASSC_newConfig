@@ -1,0 +1,31 @@
+.configReportIcon {
+    font-size: 25px;
+    color: #4c7394;
+}
+
+.BackIcon {
+    font-size: 25px;
+    padding: 5px;
+}
+
+.BackIcon:hover {
+    padding: 4px;
+    border: 1px solid #4c7394;
+    border-radius: 5px;
+    background-color: #f0f2f5;
+    color: #b70000;
+}
+
+.switchConfigReportSelectAll span {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.selectConfigReportMode {
+    min-width: 100% !important;
+}
+
+.capletters {
+    text-transform: uppercase !important;
+}

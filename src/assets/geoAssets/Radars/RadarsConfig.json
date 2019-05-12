@@ -1,0 +1,264 @@
+{
+    "positions": [
+        {
+            "markerOffset": -25,
+            "name": "Fiumicino APP1/APP2",
+            "coordinates": [12.2459, 41.7947],
+            "radarRange": "200NM"
+        },
+        {
+            "markerOffset": -25,
+            "name": "Poggio Lecceta",
+            "coordinates": [10.398, 43.566],
+            "radarRange": "200NM"
+        },
+        {
+            "markerOffset": -25,
+            "name": "Monte Codi",
+            "coordinates": [9.465, 39.883],
+            "radarRange": "200NM"
+        },
+        {
+            "markerOffset": -25,
+            "name": "Olbia",
+            "coordinates": [9.49646, 40.92281],
+            "radarRange": "200NM"
+        },
+        {
+            "markerOffset": -25,
+            "name": "Lesima",
+            "coordinates": [9.155, 44.757],
+            "radarRange": "200NM"
+        },
+        {
+            "markerOffset": -25,
+            "name": "Peschiera",
+            "coordinates": [10.611, 45.605],
+            "radarRange": "200NM"
+        },
+        {
+            "markerOffset": -25,
+            "name": "Ravenna",
+            "coordinates": [12.253, 44.273],
+            "radarRange": "200NM"
+        },
+        {
+            "markerOffset": -25,
+            "name": "Cima Canestreddu",
+            "coordinates": [8.2235, 40.7272],
+            "radarRange": "200NM"
+        },
+        {
+            "markerOffset": -25,
+            "name": "Napoli",
+            "coordinates": [14.424, 40.822],
+            "radarRange": "200NM"
+        },
+        {
+            "markerOffset": -25,
+            "name": "Firenze",
+            "coordinates": [11.091, 43.826],
+            "radarRange": "200NM"
+        },
+        {
+            "markerOffset": -25,
+            "name": "Lamezia",
+            "coordinates": [16.375, 38.958],
+            "radarRange": "200NM"
+        },
+        {
+            "markerOffset": -25,
+            "name": "Masseria Orimini",
+            "coordinates": [16.987, 40.758],
+            "radarRange": "200NM"
+        },
+        {
+            "markerOffset": -25,
+            "name": "Ustica",
+            "coordinates": [13.17462, 38.70506],
+            "radarRange": "200NM"
+        },
+        {
+            "markerOffset": -25,
+            "name": "Monte Stella",
+            "coordinates": [15.0856, 40.2566],
+            "radarRange": "200NM"
+        },
+        {
+            "markerOffset": -25,
+            "name": "Maccarese",
+            "coordinates": [12.2022, 41.9204],
+            "radarRange": "200NM"
+        }
+    ],
+    "radarList": [{
+            "value": "fm",
+            "text": "Fiumicino APP1"
+        },
+        {
+            "value": "pl",
+            "text": "Poggio Lecceta"
+        },
+        {
+            "value": "mc",
+            "text": "Monte Codi"
+        },
+        {
+            "value": "ol",
+            "text": "Olbia"
+        },
+        {
+            "value": "le",
+            "text": "Lesima"
+        },
+        {
+            "value": "pe",
+            "text": "Peschiera"
+        },
+        {
+            "value": "ra",
+            "text": "Ravenna"
+        },
+        {
+            "value": "fs",
+            "text": "Fiumicino APP2"
+        },
+        {
+            "value": "cc",
+            "text": "Cima Canestreddu"
+        },
+
+        {
+            "value": "fr",
+            "text": "Firenze"
+        },
+        {
+            "value": "lz",
+            "text": "Lamezia"
+        },
+        {
+            "value": "mo",
+            "text": "Masseria Orimini"
+        },
+        {
+            "value": "na",
+            "text": "Napoli"
+        },
+        {
+            "value": "us",
+            "text": "Ustica"
+        },
+        {
+            "value": "ms",
+            "text": "Monte Stella"
+        },
+        {
+            "value": "ma",
+            "text": "Maccarese"
+        }
+    ],
+    "detentionList": [
+        {
+            "value": "pdSSR",
+            "text": "pd SSR"
+        },
+        {
+            "value": "pdRC",
+            "text": "pd RC"
+        },
+        {
+            "value": "pdPR",
+            "text": "pd PR"
+        },
+        {
+            "value": "pdA",
+            "text": "pd A"
+        },
+        {
+            "value": "pdC",
+            "text": "pd C"
+        },
+        {
+            "value": "pdIncorValA",
+            "text": "pd Incor Val A"
+        },
+        {
+            "value": "pdIncorValC",
+            "text": "pd Incor Val C"
+        },
+        {
+            "value": "RCpdA",
+            "text": "RC pd A"
+        },
+        {
+            "value": "RCpdC",
+            "text": "RC pd C"
+        },
+        {
+            "value": "RCpdIncorValA",
+            "text": "RC pd Incor Val A"
+        },
+        {
+            "value": "RCpdIncorValC",
+            "text": "RC pd Incor Val C"
+        },
+        {
+            "value": "RCpdfalsecode",
+            "text": "RC pd false code"
+        },
+        {
+            "value": "ratefalsetrgt",
+            "text": "rate false trgt"
+        },
+        {
+            "value": "ratemultitrgt",
+            "text": "rate multi trgt"
+        },
+        {
+            "value": "ratesplittrgt",
+            "text": "rate split trgt"
+        },
+        {
+            "value": "raterefl.",
+            "text": "rate refl."
+        },
+        {
+            "value": "ratesidelobe",
+            "text": "rate side lobe"
+        },
+        {
+            "value": "Rangebias",
+            "text": "Range bias"
+        },
+        {
+            "value": "Gainbias",
+            "text": "Gain bias"
+        },
+        {
+            "value": "Azimbias",
+            "text": "Azim bias"
+        },
+        {
+            "value": "Timebias",
+            "text": "Time bias"
+        },
+        {
+            "value": "plotstddevRange",
+            "text": "plot std dev Range"
+        },
+        {
+            "value": "plotstddevAzim.",
+            "text": "plot std dev Azim."
+        }
+    ],
+    "modalitaReport": [
+        {
+            "value": "mese",
+            "text": "Mensile"
+        },
+        {
+            "value": "personalizzato",
+            "text": "Personalizzata"
+        }
+    ]
+}

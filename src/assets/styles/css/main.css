@@ -1,0 +1,30 @@
+.trigger {
+    font-size: 18px;
+    line-height: 64px;
+    padding: 0 24px;
+    cursor: pointer;
+    transition: color .3s;
+}
+
+.trigger:hover {
+    color: #1890ff;
+}
+
+.logoDecompressed {
+    background: rgb(255, 255, 255);
+    padding: 5px;
+}
+.logoCompressed {
+    background: rgb(255, 255, 255);
+    padding: 15px;
+}
+
+.linkSideBar{
+    color: rgba(255, 255, 255, 0.65);
+}
+.linkSideBar:hover{
+    color: white;
+}
+.bckColor-white{
+background-color: white !important;
+}

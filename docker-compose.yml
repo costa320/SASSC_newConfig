@@ -1,0 +1,26 @@
+version: '2.1'
+services:
+  backend_app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - '80:80'
+      - '443:443'
+    environment:
+      PORT: 8080
+      ###########
+     
+#   networks:
+#     - example_net
+
+#   networks:
+#     - example_net
+#
+# Enable networks if you're on OpenStack
+#
+#networks:
+#  example_net:
+#    driver_opts:
+#      com.docker.network.driver.mtu: 1400
+# vim: ft=yaml

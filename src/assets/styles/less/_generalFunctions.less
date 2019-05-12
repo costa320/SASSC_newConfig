@@ -1,0 +1,209 @@
+.border-radius (@radius: 5px) {
+    -webkit-border-radius: @radius;
+    -moz-border-radius: @radius;
+    border-radius: @radius;
+}
+
+.border-radius-custom (@topleft: 5px, @topright: 5px, @bottomleft: 5px, @bottomright: 5px) {
+    -webkit-border-radius: @topleft @topright @bottomright @bottomleft;
+    -moz-border-radius: @topleft @topright @bottomright @bottomleft;
+    border-radius: @topleft @topright @bottomright @bottomleft;
+}
+
+.box-shadow (@x: 0px, @y: 3px, @blur: 5px, @alpha: 0.5) {
+    -webkit-box-shadow: @x @y @blur rgba(0, 0, 0, @alpha);
+    -moz-box-shadow: @x @y @blur rgba(0, 0, 0, @alpha);
+    box-shadow: @x @y @blur rgba(0, 0, 0, @alpha);
+}
+
+.transition (@prop: all, @time: 1s, @ease: linear) {
+    -webkit-transition: @prop @time @ease;
+    -moz-transition: @prop @time @ease;
+    -o-transition: @prop @time @ease;
+    -ms-transition: @prop @time @ease;
+    transition: @prop @time @ease;
+}
+
+.gradient (@origin: left, @start: #ffffff, @stop: #000000) {
+    background-color: @start;
+    background-image: -webkit-linear-gradient(@origin, @start, @stop);
+    background-image: -moz-linear-gradient(@origin, @start, @stop);
+    background-image: -o-linear-gradient(@origin, @start, @stop);
+    background-image: -ms-linear-gradient(@origin, @start, @stop);
+    background-image: linear-gradient(@origin, @start, @stop);
+}
+
+.quick-gradient (@origin: left, @alpha: 0.2) {
+    background-image: -webkit-linear-gradient(@origin, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, @alpha));
+    background-image: -moz-linear-gradient(@origin, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, @alpha));
+    background-image: -o-linear-gradient(@origin, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, @alpha));
+    background-image: -ms-linear-gradient(@origin, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, @alpha));
+    background-image: linear-gradient(@origin, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, @alpha));
+}
+
+.gradient-text(@from, @color1, @color2) {
+    background: -webkit-linear-gradient(@from, @color1, @color2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.reflect (@length: 50%, @opacity: 0.2) {
+    -webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(@length, transparent), to(rgba(255, 255, 255, @opacity)));
+}
+
+.centered() {
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+/* if where is not specified it would put padding at all directions  ~ => this simbol will make  dash (<<->>) usable and escaped */
+
+.p(@value: 0px, @where: '') when (@where ="") {
+    padding: @value  !important;
+}
+
+.p(@value: 0px, @where: '') when not (@where ="") {
+    @property_: ~'padding-@{where}';
+    @{property_}: @value  !important;
+}
+
+.p() {
+    padding: 0px !important;
+}
+
+.m(@value: 0px, @where: '') when (@where ="") {
+    margin: @value  !important;
+}
+
+.m(@value: 0px, @where: '') when not (@where ="") {
+    @property_: ~'margin-@{where}';
+    @{property_}: @value  !important;
+}
+
+.m() {
+    margin: 0px !important;
+}
+
+.border(@color: red, @lineStroke: 1px, @stroke: solid) {
+    border: @lineStroke @stroke @color;
+}
+
+.border-radius (@radius: 5px) {
+    -webkit-border-radius: @radius;
+    -moz-border-radius: @radius;
+    border-radius: @radius;
+    -moz-background-clip: padding;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+}
+
+.border-radiuses (@topright: 0, @bottomright: 0, @bottomleft: 0, @topleft: 0) {
+    -webkit-border-top-right-radius: @topright;
+    -webkit-border-bottom-right-radius: @bottomright;
+    -webkit-border-bottom-left-radius: @bottomleft;
+    -webkit-border-top-left-radius: @topleft;
+    -moz-border-radius-topright: @topright;
+    -moz-border-radius-bottomright: @bottomright;
+    -moz-border-radius-bottomleft: @bottomleft;
+    -moz-border-radius-topleft: @topleft;
+    border-top-right-radius: @topright;
+    border-bottom-right-radius: @bottomright;
+    border-bottom-left-radius: @bottomleft;
+    border-top-left-radius: @topleft;
+    -moz-background-clip: padding;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+}
+
+/* SIZES */
+
+@XL: 1200px;
+@L: 992px;
+@M: 768px;
+@S: 576px;
+/* Margin MANAGEMENT SISTEM */
+
+.Margin(@S_, @S-M_, @M_, @L_, @XL_) {
+    /* S */
+    .mediaScreenMarginUnder(@S, @S_);
+    /* S-M*/
+    .mediaScreenMarginOver(@S, @S-M_);
+    /* M */
+    .mediaScreenMarginOver(@M, @M_);
+    /* L */
+    .mediaScreenMarginOver(@L, @L_);
+    /* XL */
+    .mediaScreenMarginOver(@XL, @XL_);
+}
+
+/* HEIGHT MANAGEMENT SISTEM */
+
+.HEIGHT(@S_, @S-M_, @M_, @L_, @XL_) {
+    /* S */
+    .mediaScreenHeightUnder(@S, @S_);
+    /* S-M*/
+    .mediaScreenHeightOver(@S, @S-M_);
+    /* M */
+    .mediaScreenHeightOver(@M, @M_);
+    /* L */
+    .mediaScreenHeightOver(@L, @L_);
+    /* XL */
+    .mediaScreenHeightOver(@XL, @XL_);
+}
+
+/* WIDTH MANAGEMENT SISTEM */
+
+.WIDTH(@S_, @S-M_, @M_, @L_, @XL_) {
+    /* S */
+    .mediaScreenWidthUnder(@S, @S_);
+    /* S-M*/
+    .mediaScreenWidthOver(@S, @S-M_);
+    /* M */
+    .mediaScreenWidthOver(@M, @M_);
+    /* L */
+    .mediaScreenWidthOver(@L, @L_);
+    /* XL */
+    .mediaScreenWidthOver(@XL, @XL_);
+}
+
+/* HEIGHT */
+
+.mediaScreenHeightUnder(@px: 768px, @height: 10%) {
+    @media screen and (max-width: @px) {
+        height: @height  !important;
+    }
+}
+
+.mediaScreenHeightOver(@px: 768px, @height: 10%) {
+    @media screen and (min-width: @px) {
+        height: @height  !important;
+    }
+}
+
+/* WIDTH */
+
+.mediaScreenWidthUnder(@px: 768px, @width: 10%) {
+    @media screen and (max-width: @px) {
+        width:@width  !important;
+    }
+}
+
+.mediaScreenWidthOver(@px: 768px, @width: 10%) {
+    @media screen and (min-width: @px) {
+        width:@width  !important;
+    }
+}
+
+/* MARGIN-TOP OVER SCREEN*/
+
+.mediaScreenMarginUnder(@px: 768px, @margin_top: 10%) {
+    @media screen and (max-width: @px) {
+        .m(@margin_top, top);
+    }
+}
+
+.mediaScreenMarginOver(@px: 768px, @margin_top: 10%) {
+    @media screen and (min-width: @px) {
+        .m(@margin_top, top);
+    }
+}

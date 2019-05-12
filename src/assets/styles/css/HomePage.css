@@ -1,0 +1,65 @@
+.minH {
+    min-height: 600px !important;
+}
+
+.minW {
+    min-width: 100%;
+}
+
+.bckTransparent {
+    background-color: rgba(240, 248, 255, 0) !important;
+}
+
+.bckWhite {
+    background-color: white;
+}
+
+.iconFileDetails {
+    font-size: 25px;
+}
+
+.c-1 {
+    color: #2b5a88;
+}
+
+.c-2 {
+    color: #4c7394;
+}
+
+.c-3 {
+    color: #6f8ba0;
+}
+
+.c-4 {
+    color: #b0bcba;
+}
+
+.c-5 {
+    color: #d1d5c6;
+}
+
+.NOM_NOP>.ant-card-body {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin: 0px;
+}
+
+.mWSelectbarChart {
+    min-width: 165px !important;
+}
+
+.drawerHomeBarChart {
+    height: 'calc(100% - 55px)';
+    overflow: 'auto';
+    padding-bottom: 53;
+}
+
+.iconSettings {
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.iconSettings:hover {
+    font-size: 25px;
+    color: #4c7394;
+}
