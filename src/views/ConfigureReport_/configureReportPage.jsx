@@ -4,13 +4,20 @@ import { connect } from "react-redux";
 import { SetRouting } from "../../redux/actions/RoutingActions.js";
 /* COMPONENTS */
 import Header from "../../components/header/header.jsx";
+/* REPORT */
+import ReportConfiguration from "../../components/ConfigureReport/reportConfiguration.jsx";
+import GenerateReportCharts from "../../components/ConfigureReport/generateReportCharts.jsx";
+
 /* CSS */
 import "antd/dist/antd.css";
 
 class ConfigureReport extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      reportConfigurationComplete: false,
+      reportConfiguration: {}
+    };
   }
 
   componentWillMount() {
@@ -25,17 +32,31 @@ class ConfigureReport extends Component {
       <div className="container">
         <div className="row">
           <div className="col">
+            {p.Routing.match.url}
             <Header />
           </div>
         </div>
         <div className="row">
-          <div className="col-3" />
-          <div className="col">{p.Routing.match.url}</div>
-          <div className="col-3" />
+          <div className="col">
+            {!s.reportConfigurationComplete ? (
+              <ReportConfiguration
+                setReportConfigurationComplete={
+                  this.setReportConfigurationComplete
+                }
+              />
+            ) : (
+              <GenerateReportCharts />
+            )}
+          </div>
         </div>
       </div>
     );
   }
+
+  setReportConfigurationComplete = (complete, data) => {
+    this.setSTATE("reportConfigurationComplete", complete);
+    this.setSTATE("reportConfiguration", data);
+  };
 
   setSTATE(state, value) {
     this.setState({ [state]: value });

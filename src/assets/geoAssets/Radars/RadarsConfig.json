@@ -254,11 +254,13 @@
     "modalitaReport": [
         {
             "value": "mese",
-            "text": "Mensile"
+            "text": "Mensile",
+            "disabled":false
         },
         {
             "value": "personalizzato",
-            "text": "Personalizzata"
+            "text": "Personalizzata",
+            "disabled":true
         }
     ]
 }
