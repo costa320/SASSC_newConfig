@@ -1,6 +1,7 @@
 var fs = require('fs');
 var path = require('path');
 var util = require('util')
+var HtmlJsonUtils = require('./ParseHtmlFile');
 
 const dataBaseDIR = './database/Years';
 
@@ -58,17 +59,17 @@ function manageNewDay(dayOBJ) {
         .substring(6, 8) + '_gg';
 
     /* Se la directory di Questo Anno non esiste la creo */
-    if (!fs.existsSync(path.resolve(__dirname, '../database/Years', data_yy))) {
-        fs.mkdirSync(path.resolve(__dirname, '../database/Years', data_yy));
+    if (!fs.existsSync(path.resolve(__dirname, '../Server/database/Years', data_yy))) {
+        fs.mkdirSync(path.resolve(__dirname, '../Server/database/Years', data_yy));
     }
-    if (!fs.existsSync(path.resolve(__dirname, '../database/Years/' + data_yy, data_mm))) {
-        fs.mkdirSync(path.resolve(__dirname, '../database/Years/' + data_yy, data_mm));
+    if (!fs.existsSync(path.resolve(__dirname, '../Server/database/Years/' + data_yy, data_mm))) {
+        fs.mkdirSync(path.resolve(__dirname, '../Server/database/Years/' + data_yy, data_mm));
     }
     /* A QUESTO PUNTO ESISTE SIA LA DIRECTORY DELL'ANNO IN QUESTIONE CHE LA DIRECTORY DEL MESE IN QUESTIONE ESISTONO*/
 
     let data = JSON.stringify(dayOBJ);
 
-    let pathOfFile = path.resolve(__dirname, '../database/Years/' + data_yy, data_mm, data_gg + '.json');
+    let pathOfFile = path.resolve(__dirname, '../Server/database/Years/' + data_yy, data_mm, data_gg + '.json');
     /* se non esiste il file di questo giorno lo crea, se ce ne gia uno lo sovrascrive */
     writeFile(pathOfFile, data);
 
@@ -86,4 +87,14 @@ function writeFile(urlOfFile, data) {
         }
         console.log('The file number: ' + fileNum + ' has been saved!');
     });
+}
+
+exports.UpdateDataBase = () => {
+    try {
+        HtmlJsonUtils.ParseAllFilesInDirectory();
+        console.log('Database Successfully updated!');
+    } catch (err) {
+        console.log(err);
+        console.log('Update action failed!');
+    }
 }

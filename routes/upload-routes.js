@@ -1,6 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var HtmlJsonUtils = require('../Server/ParseHtmlFile');
+var {
+    UpdateDataBase
+} = require('../Server/FileWorker_');
 const fs = require('fs');
 const path = require('path');
 var glob = require("glob")
@@ -12,7 +15,7 @@ express().use(bodyParser.json());
 
 var storage = multer.diskStorage({ //multers disk storage settings
     destination: function (req, file, cb) {
-        cb(null, path.resolve(__dirname, 'Upload'))
+        cb(null, path.resolve(__dirname, '../Server/Upload'))
     },
     filename: function (req, file, cb) {
         var datetimestamp = Date.now();
@@ -60,6 +63,17 @@ router.post('/upload', (req, res, next) => {
             });
             return;
         }
+
+        /*  */
+        try {
+            UpdateDataBase();
+        } catch (err) {
+            console.log(err);
+            res.json({
+                error_code: 1,
+                err_desc: err
+            })
+        }
         res.json({
             error_code: 0,
             err_desc: null
@@ -67,138 +81,18 @@ router.post('/upload', (req, res, next) => {
     });
 
 });
+
 router.get('/update', (req, res, next) => {
     try {
         HtmlJsonUtils.ParseAllFilesInDirectory();
+        UpdateDataBase();
         res.status(200).send('OK');
     } catch (err) {
+        console.log(err);
         res.status(500).send({
             'Error': 'error'
         });
     }
 });
-
-
-function getLastYear() {
-    let biggestYear = 0;
-    let latestYearPath = '';
-    fs
-        .readdirSync(path.resolve(__dirname, '../Server', 'dataBase', 'Years'))
-        .forEach((year) => {
-            let c = Number(year.substring(0, 2));
-            if (c >= biggestYear) {
-                latestYearPath = year.substring(0.2);
-            }
-        });
-    return latestYearPath;
-}
-
-function getLastMonth() {
-    let LastYear = getLastYear();
-    let biggerMonth = 0;
-    let latestMonthPath = '';
-    fs
-        .readdirSync(path.resolve(__dirname, '../Server', 'dataBase', 'Years', LastYear))
-        .forEach((year) => {
-            let c = Number(year.substring(0, 2));
-            if (c >= biggerMonth) {
-                latestMonthPath = year.substring(0.2);
-            }
-        });
-    return LastYear + '/' + latestMonthPath;
-}
-
-
-// Return a list of files of the specified fileTypes in the provided dir, with
-// the file path relative to the given dir dir: path of the directory you want
-// to search the files for fileTypes: array of file types you are search files,
-// ex: ['.txt', '.jpg']
-function getFilesFromDir(dir, fileTypes) {
-    var filesToReturn = [];
-
-    function walkDir(currentPath) {
-        var files = fs.readdirSync(currentPath);
-        for (var i in files) {
-            var curFile = path.join(currentPath, files[i]);
-            if (fs.statSync(curFile).isFile() && fileTypes.indexOf(path.extname(curFile)) != -1) {
-                filesToReturn.push(curFile.replace(dir, ''));
-            } else if (fs.statSync(curFile).isDirectory()) {
-                walkDir(curFile);
-            }
-        }
-    };
-    walkDir(dir);
-    return filesToReturn;
-}
-
-
-
-
-
-function getFilesFromDir_LastMonth(dir, fileTypes, radarChosen, detenzioneChosen) {
-
-    let objRadarMonth = {
-        radar: '',
-        data_mm: '',
-        data_yy: '',
-        values: []
-    }
-
-    function walkDir(currentPath) {
-        var files = fs.readdirSync(currentPath);
-        for (var i in files) {
-            let k = Number(i);
-            var curFile = path.join(currentPath, files[k]);
-
-            if (fs.statSync(curFile).isFile() && fileTypes.indexOf(path.extname(curFile)) != -1) {
-                var obj = JSON.parse(fs.readFileSync(curFile, 'utf8'));
-                if (k === 0) {
-                    objRadarMonth.radar = Object.keys(obj.radars)[0];
-                    objRadarMonth.data_yy = obj.data.substring(0, 2);
-                    objRadarMonth.data_mm = obj.data.substring(3, 5);
-                }
-                objRadarMonth.values.push({
-                    day: obj.data.substring(6, 8),
-                    value: Number(obj.radars[radarChosen][detenzioneChosen])
-                })
-
-            } else if (fs.statSync(curFile).isDirectory()) {
-                walkDir(curFile);
-            }
-
-        }
-    }
-
-    walkDir(dir);
-    return objRadarMonth;
-
-}
-
-
-
-function getFilesFromDir_Dettagli(dir, fileTypes) {
-    var filesToReturn = [];
-    let objYears = {};
-
-    function walkDir(currentPath) {
-        var files = fs.readdirSync(currentPath);
-        for (var i in files) {
-            var curFile = path.join(currentPath, files[i]);
-            if (fs.statSync(curFile).isFile() && fileTypes.indexOf(path.extname(curFile)) != -1) {
-                filesToReturn.push(curFile.replace(dir, ''));
-            } else if (fs.statSync(curFile).isDirectory()) {
-                if (files[i].split('_')[1] === 'yy') {
-                    objYears[files[i]] = getFilesFromDir(curFile, ['.json']).length;
-                }
-                walkDir(curFile);
-            }
-        }
-    };
-    walkDir(dir);
-    return {
-        'TotalFiles': filesToReturn.length,
-        'yearDetails': objYears
-    };
-}
 
 module.exports = router;

@@ -1,9 +1,14 @@
 var fs = require('fs');
 var cheerio = require('cheerio');
 var FileWorker = require('./FileWorker_');
+const path = require('path');
 
 /* CONFIG */
-const url = './Upload';
+
+let url = path.resolve(__dirname, './Upload')
+/* 
+const url = './Upload'; */
+
 exports.ParseAllFilesInDirectory = () => {
 
     var arrayGIORNI = [];
