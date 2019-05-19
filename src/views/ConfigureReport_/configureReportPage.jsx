@@ -45,7 +45,9 @@ class ConfigureReport extends Component {
                 }
               />
             ) : (
-              <GenerateReportCharts />
+              <GenerateReportCharts
+                reportConfiguration={s.reportConfiguration}
+              />
             )}
           </div>
         </div>

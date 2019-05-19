@@ -1,21 +1,30 @@
 import React, { Component } from "react";
 /* REDUX */
 import { connect } from "react-redux";
+/* MOMENT */
+import moment from "moment";
+import "moment/locale/it";
 /* ANTD */
-import { Icon, Select, Button } from "antd";
+import { Icon, Select, Button, DatePicker } from "antd";
 /* COMPONENTS */
 /* CSS */
 import "antd/dist/antd.css";
 /* CONFIG */
 import geoAssets from "../../assets/geoAssets/Radars/RadarsConfig.json";
+import reportConfig from "../../config/configReport.json";
 
 class ReportConfiguration extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      RadarValue: undefined,
+      RadarsValues: undefined,
       ReportMode: undefined,
-      DetectionValue: undefined
+      DetectionsValues: undefined,
+      /* DATE ZONE */
+      date: {
+        startMoment: undefined,
+        endMoment: undefined
+      }
     };
   }
 
@@ -27,51 +36,84 @@ class ReportConfiguration extends Component {
     this.props.setReportConfigurationComplete(true, this.state);
   };
 
+  handleDateChange = (moment, dateString) => {
+    this.setSTATE("date", {
+      startMoment: moment[0],
+      endMoment: moment[1]
+    });
+  };
+
   render() {
     let s = this.state;
     let p = this.props;
     return (
       <div className="container mt-5">
         <div className="row">
-          <div className="col-3">
+          <div className="col-4">
             <Select
               className="w-100"
+              mode="multiple"
               onChange={(value, option) =>
-                this.handleSelectElement(value, option, "RadarValue")
+                this.handleSelectElement(value, option, "RadarsValues")
               }
-              defaultValue={"Seleziona un radar"}
+              placeholder={"Seleziona uno o piu radar"}
             >
               {this.generateOptions(geoAssets.radarList)}
             </Select>
           </div>
-          <div className="col-3">
+          <div className="col-4">
             <Select
               className="w-100"
               onChange={(value, option) =>
                 this.handleSelectElement(value, option, "ReportMode")
               }
-              defaultValue={"Seleziona una modalità"}
+              placeholder={"Seleziona una modalità"}
             >
-              {this.generateOptions(geoAssets.modalitaReport)}
+              {this.generateOptions(reportConfig.modalitaReport)}
             </Select>
           </div>
-          <div className="col-3">
+          <div className="col-4">
             <Select
               className="w-100"
+              mode="multiple"
               onChange={(value, option) =>
-                this.handleSelectElement(value, option, "DetectionValue")
+                this.handleSelectElement(value, option, "DetectionsValues")
               }
-              defaultValue={"Seleziona una detezione"}
+              placeholder={"Seleziona una detezione"}
             >
               {this.generateOptions(geoAssets.detentionList)}
             </Select>
           </div>
-          <div className="col">
+        </div>
+
+        {s.ReportMode === "personalizzato" ? (
+          <div className="row mt-4">
+            <div className="col-4">
+              <DatePicker.RangePicker
+                onChange={this.handleDateChange}
+                placeholder={["Data inizio", "Data fine"]}
+              />
+            </div>
+          </div>
+        ) : (
+          ""
+        )}
+        <div className="row mt-4">
+          <div className="col-9" />
+          <div className="col-3">
             <Button
               type="primary"
               onClick={this.handleClickProcedi}
               disabled={
-                s.RadarValue && s.ReportMode && s.DetectionValue ? false : true
+                s.date.startMoment &&
+                s.date.endMoment &&
+                s.RadarsValues &&
+                s.RadarsValues.length >= 1 &&
+                s.ReportMode &&
+                s.DetectionsValues &&
+                s.DetectionsValues.length >= 1
+                  ? false
+                  : true
               }
             >
               <Icon type="double-right" />

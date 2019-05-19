@@ -1,0 +1,14 @@
+{
+  "modalitaReport": [
+    {
+      "value": "mese",
+      "text": "Mensile",
+      "disabled": true
+    },
+    {
+      "value": "personalizzato",
+      "text": "Personalizzata",
+      "disabled": false
+    }
+  ]
+}

@@ -250,17 +250,5 @@
             "value": "plotstddevAzim.",
             "text": "plot std dev Azim."
         }
-    ],
-    "modalitaReport": [
-        {
-            "value": "mese",
-            "text": "Mensile",
-            "disabled":false
-        },
-        {
-            "value": "personalizzato",
-            "text": "Personalizzata",
-            "disabled":true
-        }
     ]
 }
