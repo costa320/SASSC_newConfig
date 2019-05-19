@@ -9,7 +9,7 @@ express().use(bodyParser.urlencoded({ extended: true }));
 
 router.post("/getRadarDataByDateAndDetection", function(req, res) {
   /* i dati passano fino a qui */
-  console.log(req.dati);
+  console.log(req.body.dati);
 });
 
 /* restituisce il numero di file per il mese richiesto */
