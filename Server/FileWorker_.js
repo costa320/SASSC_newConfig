@@ -25,6 +25,7 @@ exports.getRadarDataByDateRange = requestConfig => {
     array_YY_MM = whatMonthsArePartial(start, end, array_YY_MM);
     console.log("MM && YY involved: ");
     console.log(array_YY_MM);
+    //TODO andare a leggere i file che ci siamo estrapolati nella struttura dati => array_YY_MM
   });
 };
 
