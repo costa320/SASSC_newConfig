@@ -3,13 +3,24 @@ var router = express.Router();
 const fs = require("fs");
 const path = require("path");
 var bodyParser = require("body-parser");
+var { getRadarDataByDateRange } = require("../Server/FileWorker_.js");
 
 express().use(bodyParser.json());
 express().use(bodyParser.urlencoded({ extended: true }));
 
 router.post("/getRadarDataByDateAndDetection", function(req, res) {
   /* i dati passano fino a qui */
+  let D = req.body.dati;
   console.log(req.body.dati);
+
+  getRadarDataByDateRange(D)
+    .then(result => {
+      res.status(200).send(body);
+    })
+    .catch(function(error) {
+      console.log(error);
+      res.status(400).send(error);
+    });
 });
 
 /* restituisce il numero di file per il mese richiesto */
