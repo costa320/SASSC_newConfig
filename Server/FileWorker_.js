@@ -11,6 +11,8 @@ DetectionsValues:Array(2) ["pdRC", "pdPR"]
 RadarsValues:Array(2) ["fm", "mc"]
 ReportMode:"personalizzato" */
 exports.getRadarDataByDateRange = requestConfig => {
+  let start = requestConfig.date.startMoment,
+    end = requestConfig.date.endMoment;
   let D_start = moment(requestConfig.date.startMoment),
     D_end = moment(requestConfig.date.endMoment),
     detections = requestConfig.DetectionsValues,
@@ -20,8 +22,9 @@ exports.getRadarDataByDateRange = requestConfig => {
     console.log("START PROCESSING FILES...");
     /* months and years involved in this date range */
     let array_YY_MM = getMonthsBeetweenTwoDates(D_start, D_end);
-    array_YY_MM = whatMonthsArePartial(D_start, D_end, array_YY_MM);
-    console.log("MM && YY involved: " + array_YY_MM);
+    array_YY_MM = whatMonthsArePartial(start, end, array_YY_MM);
+    console.log("MM && YY involved: ");
+    console.log(array_YY_MM);
   });
 };
 
@@ -85,17 +88,35 @@ function getMonthsBeetweenTwoDates(startDate_moment, endDateMoment) {
   return result;
 }
 
-function whatMonthsArePartial(startDate_moment, endDateMoment, months) {
+function whatMonthsArePartial(startDate, endDate, months) {
   if (months.length > 0 && months.length >= 1) {
     /* PROBABILMENTE IL PRIMO MESE E l'ULTIMO SONO PARZIALI */
     let firstMonth = months[0],
       lastMonth = months[months.length - 1];
-    return months.map((elem, i) => {
+    let results = months.map((elem, i) => {
       if (elem === firstMonth || elem === lastMonth) {
-        return {
-          date: elem,
-          partial: true
-        };
+        if (i === 0) {
+          /* FIRST ELEMENT/MONTH  */
+          let daysToAnalize = new getDaysToBeInMonthAnalized(
+            startDate,
+            "remaining"
+          );
+
+          return {
+            date: elem,
+            partial: true,
+            daysToAnalize: daysToAnalize
+          };
+        } else {
+          /* LAST ELEMENT/MONTH */
+          let daysToAnalize = new getDaysToBeInMonthAnalized(endDate, "passed");
+
+          return {
+            date: elem,
+            partial: true,
+            daysToAnalize: daysToAnalize
+          };
+        }
       } else {
         return {
           date: elem,
@@ -103,6 +124,40 @@ function whatMonthsArePartial(startDate_moment, endDateMoment, months) {
         };
       }
     });
+
+    return results;
+  }
+}
+
+function getDaysToBeInMonthAnalized(dateString, RP) {
+  /* RP = remaining(till the end of the month) or passed(already passed till now) */
+
+  if (RP === "remaining") {
+    var a = moment(dateString, "YYYY-MM-GG").endOf("month"),
+      b = moment(dateString, "YYYY-MM-GG"),
+      numberOfDays = a.diff(b, "days");
+
+    let daysToBeAnalized = [];
+
+    let dateToBeEncreased = moment(dateString, "YYYY-MM-DD");
+    for (let i = 0; i <= numberOfDays; i++) {
+      daysToBeAnalized.push(dateToBeEncreased.format("DD"));
+      dateToBeEncreased.add(1, "day");
+    }
+    return daysToBeAnalized;
+  } else {
+    var a_ = moment(dateString).startOf("month");
+    var b_ = moment(dateString);
+    var numberOfDays_ = b_.diff(a_, "days");
+
+    let dateToBeEncreased_ = moment("01", "GG");
+    let daysToBeAnalized_ = [];
+
+    for (let i_ = 0; i_ <= numberOfDays_; i_++) {
+      daysToBeAnalized_.push(dateToBeEncreased_.format("DD"));
+      dateToBeEncreased_.add(1, "day");
+    }
+    return daysToBeAnalized_;
   }
 }
 
