@@ -1,0 +1,44 @@
+{
+  "19/01/01": {
+    "Fm_chA": {
+      "detections": {
+        "PD_RC": "80.90",
+        "PD_PR": "91.03"
+      }
+    },
+    "Mc_chA": {
+      "detections": {
+        "PD_RC": "80.90",
+        "PD_PR": "91.03"
+      }
+    }
+  },
+  "19/01/02": {
+    "Fm_chA": {
+      "detections": {
+        "PD_RC": "80.90",
+        "PD_PR": "91.03"
+      }
+    },
+    "Mc_chA": {
+      "detections": {
+        "PD_RC": "80.90",
+        "PD_PR": "91.03"
+      }
+    }
+  },
+  "19/01/03": {
+    "Fm_chA": {
+      "detections": {
+        "PD_RC": "80.90",
+        "PD_PR": "91.03"
+      }
+    },
+    "Mc_chA": {
+      "detections": {
+        "PD_RC": "80.90",
+        "PD_PR": "91.03"
+      }
+    }
+  }
+}

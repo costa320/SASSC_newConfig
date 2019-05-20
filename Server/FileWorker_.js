@@ -2,6 +2,9 @@ var fs = require("fs");
 var path = require("path");
 var util = require("util");
 var HtmlJsonUtils = require("./ParseHtmlFile");
+var {
+  getFilesContentByDateRangeByRadarsByDetections
+} = require("./FileReader");
 var moment = require("moment");
 
 const dataBaseDIR = "./database/Years";
@@ -23,9 +26,17 @@ exports.getRadarDataByDateRange = requestConfig => {
     /* months and years involved in this date range */
     let array_YY_MM = getMonthsBeetweenTwoDates(D_start, D_end);
     array_YY_MM = whatMonthsArePartial(start, end, array_YY_MM);
-    console.log("MM && YY involved: ");
-    console.log(array_YY_MM);
-    //TODO andare a leggere i file che ci siamo estrapolati nella struttura dati => array_YY_MM
+    /*     console.log("MM && YY involved: ");
+    console.log(array_YY_MM); */
+
+    /* new promise that is need for async read file */
+    getFilesContentByDateRangeByRadarsByDetections(array_YY_MM)
+      .then(result => {
+        console.log(result);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   });
 };
 
