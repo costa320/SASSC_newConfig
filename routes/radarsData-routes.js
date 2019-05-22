@@ -15,11 +15,12 @@ router.post("/getRadarDataByDateAndDetection", function(req, res) {
 
   getRadarDataByDateRange(D)
     .then(result => {
-      res.status(200).send(body);
+      console.log(result);
+      res.status(200).send(result);
     })
     .catch(function(error) {
       console.log(error);
-      res.status(400).send(error);
+      res.status(500).send(error);
     });
 });
 

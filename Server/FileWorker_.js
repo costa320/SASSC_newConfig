@@ -32,10 +32,13 @@ exports.getRadarDataByDateRange = requestConfig => {
     /* new promise that is need for async read file */
     getFilesContentByDateRangeByRadarsByDetections(array_YY_MM)
       .then(result => {
-        console.log(result);
+        /*         console.log(result); */
+        /* TODO filtrare il risultato o qui o alla fonte nel fileReader.js, filtrare ogni radar per la detezione selezionata*/
+        res(result);
       })
       .catch(function(error) {
-        console.log(error);
+        /*         console.log(error); */
+        reg(error);
       });
   });
 };
