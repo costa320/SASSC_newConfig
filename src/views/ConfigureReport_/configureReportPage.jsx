@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { SetRouting } from "../../redux/actions/RoutingActions.js";
 /* COMPONENTS */
 import Header from "../../components/header/header.jsx";
+import BarChart from "../../components/ChartComponent/chart.jsx";
 /* REPORT */
 import ReportConfiguration from "../../components/ConfigureReport/reportConfiguration.jsx";
 import GenerateReportCharts from "../../components/ConfigureReport/generateReportCharts.jsx";
@@ -49,6 +50,8 @@ class ConfigureReport extends Component {
                 reportConfiguration={s.reportConfiguration}
               />
             )}
+
+            <BarChart />
           </div>
         </div>
       </div>

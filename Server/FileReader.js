@@ -60,6 +60,7 @@ function readFileAsync(filename, enc = "UTF-8") {
       if (err) {
         let dateRegex = /(?!_yy|_mm|_gg)([0-9]+)/gi;
         let fileErrorDate = err.path.match(dateRegex).join("/");
+        fileErrorDate = fileErrorDate.substring(2, fileErrorDate.length);
         /*      fileErrorDate = /[0-9]/gi.exec(fileErrorDate).join("-"); */
 
         /* non faccio reject se no tutto il Promise.all va in errore, faccion resolve e ritorno l'errore con la data del giorno in considerazione */
