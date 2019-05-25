@@ -33,7 +33,6 @@ exports.getRadarDataByDateRange = requestConfig => {
     getFilesContentByDateRangeByRadarsByDetections(array_YY_MM)
       .then(result => {
         /*         console.log(result); */
-        /* TODO filtrare il risultato o qui o alla fonte nel fileReader.js, filtrare ogni radar per la detezione selezionata*/
         res(result);
       })
       .catch(function(error) {

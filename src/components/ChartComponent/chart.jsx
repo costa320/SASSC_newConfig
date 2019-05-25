@@ -23,116 +23,111 @@ class BarChart extends Component {
   initBarChart() {
     var data = [
       {
-        country: "Europe",
-        year: "1750",
-        value: 163
+        date: "18/05/01",
+        radar: "Fiumicino",
+        value: 89.9
       },
       {
-        country: "Europe",
-        year: "1800",
-        value: 203
+        date: "18/05/02",
+        radar: "Fiumicino",
+        value: 90.87
       },
       {
-        country: "Europe",
-        year: "1850",
-        value: 276
+        date: "18/05/03",
+        radar: "Fiumicino",
+        value: 90.87
       },
       {
-        country: "Europe",
-        year: "1900",
-        value: 408
+        date: "18/05/04",
+        radar: "Fiumicino",
+        value: 90.87
       },
       {
-        country: "Europe",
-        year: "1950",
-        value: 547
+        date: "18/05/05",
+        radar: "Fiumicino",
+        value: 83
       },
       {
-        country: "Europe",
-        year: "1999",
-        value: 729
+        date: "18/05/06",
+        radar: "Fiumicino",
+        value: 90.87
       },
       {
-        country: "Europe",
-        year: "2050",
-        value: 628
+        date: "18/05/07",
+        radar: "Fiumicino",
+        value: 90.87
       },
       {
-        country: "Europe",
-        year: "2100",
-        value: 828
+        date: "18/05/08",
+        radar: "Fiumicino",
+        value: 90.87
       },
       {
-        country: "Asia",
-        year: "1750",
-        value: 502
+        date: "18/05/09",
+        radar: "Fiumicino",
+        value: 60
       },
       {
-        country: "Asia",
-        year: "1800",
-        value: 635
+        date: "18/05/10",
+        radar: "Fiumicino",
+        value: 90.87
       },
       {
-        country: "Asia",
-        year: "1850",
-        value: 809
+        date: "18/05/11",
+        radar: "Fiumicino",
+        value: 90.87
       },
       {
-        country: "Asia",
-        year: "1900",
-        value: 947
+        date: "18/05/12",
+        radar: "Fiumicino",
+        value: 89.9
       },
       {
-        country: "Asia",
-        year: "1950",
-        value: 1402
+        date: "18/05/13",
+        radar: "Fiumicino",
+        value: 90.87
       },
       {
-        country: "Asia",
-        year: "1999",
-        value: 3634
+        date: "18/05/14",
+        radar: "Fiumicino",
+        value: 90.87
       },
       {
-        country: "Asia",
-        year: "2050",
-        value: 5268
-      },
-      {
-        country: "Asia",
-        year: "2100",
-        value: 7268
+        date: "18/05/15",
+        radar: "Fiumicino",
+        value: 87
       }
     ];
-    
-    var ds = new DataSet();
-    var dv = ds
-      .createView()
-      .source(data)
-      .transform({
-        type: "percent",
-        field: "value", // 统计销量
-        dimension: "country", // 每年的占比
-        groupBy: ["year"], // 以不同产品类别为分组
-        as: "percent"
-      });
-
     var chart = new G2.Chart({
       container: "BarChartMountNode",
       forceFit: true,
       height: 290
     });
-    chart.source(dv, {
-      percent: {
-        min: 0,
-        formatter: function formatter(val) {
-          return (val * 100).toFixed(2) + "%";
-        }
-      }
+    chart.source(data);
+
+    chart.scale("value", {
+      tickInterval: 20
     });
+
     chart
-      .intervalStack()
-      .position("year*percent")
-      .color("country");
+      .interval()
+      .position("date*value")
+      .color("value", value => {
+        if (value < 90) {
+          return "red";
+        }
+        return "green";
+      })
+      .label("value", {
+        offset: 15,
+        textStyle: {
+          textAlign: "center",
+          fontSize: 11,
+          shadowBlur: 2,
+          shadowColor: "rgba(0, 0, 0, .45)"
+        }
+      });
+
     chart.render();
   }
 
