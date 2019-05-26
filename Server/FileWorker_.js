@@ -113,7 +113,9 @@ function whatMonthsArePartial(startDate, endDate, months) {
           /* FIRST ELEMENT/MONTH  */
           let daysToAnalize = new getDaysToBeInMonthAnalized(
             startDate,
-            "remaining"
+            "remaining",
+            endDate,
+            months
           );
 
           return {
@@ -143,13 +145,23 @@ function whatMonthsArePartial(startDate, endDate, months) {
   }
 }
 
-function getDaysToBeInMonthAnalized(dateString, RP) {
+function getDaysToBeInMonthAnalized(dateString, RP, endDate, months) {
   /* RP = remaining(till the end of the month) or passed(already passed till now) */
-
+  /* endDate serve solo nel caso in cui sono <= 30gg , e quindi se ci sono piu di due elementi all'interno del array months*/
   if (RP === "remaining") {
     var a = moment(dateString, "YYYY-MM-GG").endOf("month"),
-      b = moment(dateString, "YYYY-MM-GG"),
+      b,
+      numberOfDays;
+
+    if (months.length > 1) {
+      b = moment(dateString, "YYYY-MM-GG");
       numberOfDays = a.diff(b, "days");
+    } else {
+      a = moment(dateString);
+      b = moment(endDate);
+
+      numberOfDays = moment.duration(b.diff(a)).asDays();
+    }
 
     let daysToBeAnalized = [];
 

@@ -6,8 +6,11 @@ import { notification, Spin } from "antd";
 /* AXIOS */
 import { radar_getRadarDataByDateAndDetection } from "../../axios/radar-resource.jsx";
 /* COMPONENTS */
+import BarChart from "../ChartComponent/chart.jsx";
 /* CSS */
 import "antd/dist/antd.css";
+/* EXTRAS */
+import { getFormattedRadarsData } from "../../extra/api-result-formatter.js";
 
 class GenerateReportCharts extends Component {
   /* {
@@ -37,7 +40,7 @@ class GenerateReportCharts extends Component {
 
   getRadarDataByDateAndDetection(reportConfiguration) {
     let self = this;
-   /*  this.setSTATE("loading", true); */
+    /*  this.setSTATE("loading", true); */
     radar_getRadarDataByDateAndDetection(reportConfiguration)
       .then(res => {
         console.log(res);
@@ -46,6 +49,7 @@ class GenerateReportCharts extends Component {
           "Operazione completata con successo"
         );
         self.setSTATE("radarsData", res.data);
+        self.generateReport(res.data);
         self.setSTATE("loading", false);
       })
       .catch(function(error) {
@@ -53,6 +57,7 @@ class GenerateReportCharts extends Component {
         self.setSTATE("loading", false);
         if (process.env.enviroment === "DEV_START") {
           self.getGeneralNotification("warning", "STAI IN MODALITA DEV!");
+          self.generateReport();
         } else {
           self.getGeneralNotification(
             "error",
@@ -78,9 +83,19 @@ class GenerateReportCharts extends Component {
               {s.reportConfiguration.ReportMode}
             </div>
           </div>
+          {/* GENERATE REPORT */}
+          <div className="row">
+            <div className="col">
+              <BarChart data={chartData} />
+            </div>
+          </div>
         </Spin>
       </div>
     );
+  }
+
+  generateReport(rawData) {
+    getFormattedRadarsData(rawData);
   }
 
   getGeneralNotification(type, message, description) {
@@ -105,3 +120,81 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(GenerateReportCharts);
+
+var chartData = [
+  {
+    date: "18/05/01",
+    radar: "Fiumicino",
+    value: 89.9
+  },
+  {
+    date: "18/05/02",
+    radar: "Fiumicino",
+    value: 90.87
+  },
+  {
+    date: "18/05/03",
+    radar: "Fiumicino",
+    value: 90.87
+  },
+  {
+    date: "18/05/04",
+    radar: "Fiumicino",
+    value: 90.87
+  },
+  {
+    date: "18/05/05",
+    radar: "Fiumicino",
+    value: 83
+  },
+  {
+    date: "18/05/06",
+    radar: "Fiumicino",
+    value: 90.87
+  },
+  {
+    date: "18/05/07",
+    radar: "Fiumicino",
+    value: 90.87
+  },
+  {
+    date: "18/05/08",
+    radar: "Fiumicino",
+    value: 90.87
+  },
+  {
+    date: "18/05/09",
+    radar: "Fiumicino",
+    value: 60
+  },
+  {
+    date: "18/05/10",
+    radar: "Fiumicino",
+    value: 90.87
+  },
+  {
+    date: "18/05/11",
+    radar: "Fiumicino",
+    value: 90.87
+  },
+  {
+    date: "18/05/12",
+    radar: "Fiumicino",
+    value: 89.9
+  },
+  {
+    date: "18/05/13",
+    radar: "Fiumicino",
+    value: 90.87
+  },
+  {
+    date: "18/05/14",
+    radar: "Fiumicino",
+    value: 90.87
+  },
+  {
+    date: "18/05/15",
+    radar: "Fiumicino",
+    value: 87
+  }
+];

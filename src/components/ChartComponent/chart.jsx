@@ -17,87 +17,15 @@ class BarChart extends Component {
   }
 
   componentDidMount() {
-    this.initBarChart();
+    let data = this.props.data;
+    this.initBarChart(data);
+  }
+  componentWillReceiveProps(nextProps) {
+    let data = nextProps.data;
+    this.initBarChart(data);
   }
 
-  initBarChart() {
-    var data = [
-      {
-        date: "18/05/01",
-        radar: "Fiumicino",
-        value: 89.9
-      },
-      {
-        date: "18/05/02",
-        radar: "Fiumicino",
-        value: 90.87
-      },
-      {
-        date: "18/05/03",
-        radar: "Fiumicino",
-        value: 90.87
-      },
-      {
-        date: "18/05/04",
-        radar: "Fiumicino",
-        value: 90.87
-      },
-      {
-        date: "18/05/05",
-        radar: "Fiumicino",
-        value: 83
-      },
-      {
-        date: "18/05/06",
-        radar: "Fiumicino",
-        value: 90.87
-      },
-      {
-        date: "18/05/07",
-        radar: "Fiumicino",
-        value: 90.87
-      },
-      {
-        date: "18/05/08",
-        radar: "Fiumicino",
-        value: 90.87
-      },
-      {
-        date: "18/05/09",
-        radar: "Fiumicino",
-        value: 60
-      },
-      {
-        date: "18/05/10",
-        radar: "Fiumicino",
-        value: 90.87
-      },
-      {
-        date: "18/05/11",
-        radar: "Fiumicino",
-        value: 90.87
-      },
-      {
-        date: "18/05/12",
-        radar: "Fiumicino",
-        value: 89.9
-      },
-      {
-        date: "18/05/13",
-        radar: "Fiumicino",
-        value: 90.87
-      },
-      {
-        date: "18/05/14",
-        radar: "Fiumicino",
-        value: 90.87
-      },
-      {
-        date: "18/05/15",
-        radar: "Fiumicino",
-        value: 87
-      }
-    ];
+  initBarChart(data) {
     var chart = new G2.Chart({
       container: "BarChartMountNode",
       forceFit: true,
@@ -116,7 +44,7 @@ class BarChart extends Component {
         if (value < 90) {
           return "red";
         }
-        return "green";
+        return "blue";
       })
       .label("value", {
         offset: 15,
