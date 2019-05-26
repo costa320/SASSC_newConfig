@@ -65,7 +65,7 @@ function readFileAsync(filename, enc = "UTF-8") {
 
         /* non faccio reject se no tutto il Promise.all va in errore, faccion resolve e ritorno l'errore con la data del giorno in considerazione */
         resolve({
-          date: fileErrorDate,
+          data: fileErrorDate,
           error: err
         });
       } else resolve(JSON.parse(data));

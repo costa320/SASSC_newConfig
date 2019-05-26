@@ -11,6 +11,8 @@ import BarChart from "../ChartComponent/chart.jsx";
 import "antd/dist/antd.css";
 /* EXTRAS */
 import { getFormattedRadarsData } from "../../extra/api-result-formatter.js";
+/* MOCK */
+import rawDataRadars from "../../config/mockRawDataRadars.json";
 
 class GenerateReportCharts extends Component {
   /* {
@@ -49,7 +51,7 @@ class GenerateReportCharts extends Component {
           "Operazione completata con successo"
         );
         self.setSTATE("radarsData", res.data);
-        self.generateReport(res.data);
+        self.generateReport(res.data, self.state.reportConfiguration);
         self.setSTATE("loading", false);
       })
       .catch(function(error) {
@@ -57,7 +59,7 @@ class GenerateReportCharts extends Component {
         self.setSTATE("loading", false);
         if (process.env.enviroment === "DEV_START") {
           self.getGeneralNotification("warning", "STAI IN MODALITA DEV!");
-          self.generateReport();
+          self.generateReport(rawDataRadars, self.state.reportConfiguration);
         } else {
           self.getGeneralNotification(
             "error",
@@ -94,8 +96,8 @@ class GenerateReportCharts extends Component {
     );
   }
 
-  generateReport(rawData) {
-    getFormattedRadarsData(rawData);
+  generateReport(rawData, reportConfiguration) {
+    let formattedData = getFormattedRadarsData(rawData, reportConfiguration);
   }
 
   getGeneralNotification(type, message, description) {
