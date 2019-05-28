@@ -28,7 +28,9 @@ class GenerateReportCharts extends Component {
     super(props);
     this.state = {
       reportConfiguration: undefined,
-      radarsData: undefined
+      radarsData: undefined,
+      /* formattedData */
+      formattedRadarsData: undefined
     };
   }
 
@@ -51,7 +53,7 @@ class GenerateReportCharts extends Component {
           "Operazione completata con successo"
         );
         self.setSTATE("radarsData", res.data);
-        self.generateReport(res.data, self.state.reportConfiguration);
+        self.processRawData(res.data, self.state.reportConfiguration);
         self.setSTATE("loading", false);
       })
       .catch(function(error) {
@@ -59,7 +61,7 @@ class GenerateReportCharts extends Component {
         self.setSTATE("loading", false);
         if (process.env.enviroment === "DEV_START") {
           self.getGeneralNotification("warning", "STAI IN MODALITA DEV!");
-          self.generateReport(rawDataRadars, self.state.reportConfiguration);
+          self.processRawData(rawDataRadars, self.state.reportConfiguration);
         } else {
           self.getGeneralNotification(
             "error",
@@ -82,13 +84,13 @@ class GenerateReportCharts extends Component {
                 this.getRadarDataByDateAndDetection(s.reportConfiguration)
               }
             >
-              {s.reportConfiguration.ReportMode}
+              {/*               {s.reportConfiguration.ReportMode} */}
             </div>
           </div>
           {/* GENERATE REPORT */}
           <div className="row">
             <div className="col">
-              <BarChart data={chartData} />
+              {this.generateCharts(s.formattedRadarsData)}
             </div>
           </div>
         </Spin>
@@ -96,8 +98,22 @@ class GenerateReportCharts extends Component {
     );
   }
 
-  generateReport(rawData, reportConfiguration) {
+  processRawData(rawData, reportConfiguration) {
     let formattedData = getFormattedRadarsData(rawData, reportConfiguration);
+    this.setSTATE("formattedRadarsData", formattedData);
+  }
+
+  generateCharts(formattedRadarsData) {
+    if (formattedRadarsData && formattedRadarsData.length >= 1) {
+      return formattedRadarsData.map(r => {
+        return Object.keys(r.detections).map(detectionKey => {
+          let data = r.detections[detectionKey];
+          return (
+            <BarChart data={data} radar={r.radar} detection={detectionKey} />
+          );
+        });
+      });
+    }
   }
 
   getGeneralNotification(type, message, description) {
@@ -123,7 +139,7 @@ export default connect(
   mapDispatchToProps
 )(GenerateReportCharts);
 
-var chartData = [
+/* var chartData = [
   {
     date: "18/05/01",
     radar: "Fiumicino",
@@ -199,4 +215,4 @@ var chartData = [
     radar: "Fiumicino",
     value: 87
   }
-];
+]; */
