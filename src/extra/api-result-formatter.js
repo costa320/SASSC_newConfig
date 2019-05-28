@@ -17,7 +17,6 @@ export function getFormattedRadarsData(rawData, configFilter) {
   /* Fill up all detections with data */
 
   RESULT = getValuedResult(RESULT, rawData);
-  /* TODO legare questo processo di formattazione dati al progetto vero e proprio  */
   /*  console.log(RESULT); */
   return RESULT;
 }
