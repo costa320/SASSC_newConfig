@@ -53,7 +53,17 @@ class BarChart extends Component {
       var chart = new G2.Chart({
         container: chartContainerName,
         forceFit: true,
-        height: 290
+        height: 290,
+        padding: { top: 40, right: 20, bottom: 40, left: 30 },
+        background: {
+          /*           fill: {string}, //Chart background color
+          fillOpacity: {number}, //Chart background transparency */
+          /*  stroke: 'black', //Chart border color */
+          /*           strokeOpacity: {number}, //Chart border transparency
+          opacity: {number}, //Overall transparency of charts
+          lineWidth: {number}, //Chart border thickness
+          radius: {number} //Chart fillet size */
+        }
       });
       chart.source(data);
 

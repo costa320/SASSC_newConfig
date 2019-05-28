@@ -51,7 +51,7 @@ class ConfigureReport extends Component {
               />
             )}
 
-            {/* <BarChart data={chartData} /> */}
+             {/* <BarChart data={chartData} />  */}
           </div>
         </div>
       </div>

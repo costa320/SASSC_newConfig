@@ -11,6 +11,7 @@ import BarChart from "../ChartComponent/chart.jsx";
 import "antd/dist/antd.css";
 /* EXTRAS */
 import { getFormattedRadarsData } from "../../extra/api-result-formatter.js";
+import { UUID } from "../../extra/UUID.js";
 /* MOCK */
 import rawDataRadars from "../../config/mockRawDataRadars.json";
 
@@ -109,7 +110,12 @@ class GenerateReportCharts extends Component {
         return Object.keys(r.detections).map(detectionKey => {
           let data = r.detections[detectionKey];
           return (
-            <BarChart data={data} radar={r.radar} detection={detectionKey} />
+            <BarChart
+              key={UUID()}
+              data={data}
+              radar={r.radar}
+              detection={detectionKey}
+            />
           );
         });
       });
