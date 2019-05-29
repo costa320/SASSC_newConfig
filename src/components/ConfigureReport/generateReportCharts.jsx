@@ -2,9 +2,11 @@ import React, { Component } from "react";
 /* REDUX */
 import { connect } from "react-redux";
 /* ANTD */
-import { notification, Spin } from "antd";
+import { notification, Spin, Icon } from "antd";
 /* AXIOS */
 import { radar_getRadarDataByDateAndDetection } from "../../axios/radar-resource.jsx";
+/* PRINT */
+import ReactToPrint from "react-to-print";
 /* COMPONENTS */
 import BarChart from "../ChartComponent/chart.jsx";
 /* CSS */
@@ -78,6 +80,13 @@ class GenerateReportCharts extends Component {
     return (
       <div className="container mt-5">
         <Spin spinning={s.loading} size="large">
+          {/* PRINT REPORT */}
+          <ReactToPrint
+            trigger={() => (
+              <Icon className="BackIcon" type="printer" theme="outlined" />
+            )}
+            content={() => this.componentRef}
+          />
           <div className="row">
             <div
               className="col-3"
@@ -89,7 +98,7 @@ class GenerateReportCharts extends Component {
             </div>
           </div>
           {/* GENERATE REPORT */}
-          <div className="row">
+          <div className="row" ref={el => (this.componentRef = el)}>
             <div className="col">
               {this.generateCharts(s.formattedRadarsData)}
             </div>
