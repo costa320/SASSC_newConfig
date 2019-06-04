@@ -5,16 +5,15 @@ import { connect } from "react-redux";
 import { notification, Spin, Icon } from "antd";
 /* AXIOS */
 import { radar_getRadarDataByDateAndDetection } from "../../axios/radar-resource.jsx";
-/* PRINT */
-import ReactToPrint from "react-to-print";
 /* COMPONENTS */
 import BarChart from "../ChartComponent/chart.jsx";
 /* CSS */
 import "antd/dist/antd.css";
 /* EXTRAS */
-import { getFormattedRadarsData } from "../../extra/api-result-formatter.js";
+import { getFormattedRadarsData } from "../../extra/api/api-result-formatter.js";
 import { UUID } from "../../extra/UUID.js";
-import { getNewChartsSVG } from "../../extra/api-htmlToSVG.js";
+import { getNewChartsPNG } from "../../extra/api/api-htmlToPNG.js";
+import { generatePdfFromChartsData } from "../../extra/api/api-Pdf.js";
 /* MOCK */
 import rawDataRadars from "../../config/mockRawDataRadars.json";
 
@@ -36,7 +35,7 @@ class GenerateReportCharts extends Component {
       /* formattedData */
       formattedRadarsData: undefined,
       chartsComponents: [],
-      /* PDF data */
+      /* PDF data with png inside*/
       chartsData: []
     };
   }
@@ -79,10 +78,13 @@ class GenerateReportCharts extends Component {
   }
 
   handleClickCreatePdf = () => {
+    let self = this;
     /* WE WILL UPDATE chartData_ with svgImage of his chart */
-    getNewChartsSVG(this.state.chartsData)
+    getNewChartsPNG(this.state.chartsData)
       .then(res => {
         console.log(res);
+        self.setSTATE("chartsData", res);
+        self.createPDF(res);
       })
       .catch(function(error) {
         console.log(error);
@@ -96,6 +98,11 @@ class GenerateReportCharts extends Component {
         }
       });
   };
+
+  createPDF(chartsData) {
+    let s = this.state;
+    generatePdfFromChartsData(s.reportConfiguration, chartsData);
+  }
 
   render() {
     let s = this.state;

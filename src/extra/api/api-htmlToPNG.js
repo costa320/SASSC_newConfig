@@ -1,7 +1,7 @@
 /* HTML TO SVG */
 import html2canvas from "html2canvas";
 
-export function getNewChartsSVG(chartsData) {
+export function getNewChartsPNG(chartsData) {
   return new Promise((res, reg) => {
     const chartsData_ = chartsData;
 
@@ -37,7 +37,8 @@ function getFormatChartsData(oldChartsData, allPromisesValues) {
   /* format charts data and add svg */
   return oldChartsData.map((ChartsData, i) => {
     let newChartsDataObj_ = ChartsData;
-    newChartsDataObj_.svgElement = allPromisesValues[i];
+    let pngChart = allPromisesValues[i].toDataURL("image/png");
+    newChartsDataObj_.pngChartImage = pngChart;
     return newChartsDataObj_;
   });
 }

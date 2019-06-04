@@ -1,4 +1,4 @@
-import { UUID } from "./UUID.js";
+import { UUID } from "../UUID.js";
 
 var RESULT = null;
 
