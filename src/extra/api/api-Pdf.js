@@ -56,7 +56,7 @@ function getInitialPage(RC) {
           <Text>{dateStart}</Text>
         </View>
         <View style={styles.section}>
-          <Text>Section #2</Text>
+          <Text>{dateEnd}</Text>
         </View>
       </Page>
     </Document>
