@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
 function getInitialPage(RC) {
   let dateStart = moment(RC.date.startMoment).format("DD/MM/YYYY");
   let dateEnd = moment(RC.date.endMoment).format("DD/MM/YYYY");
+  /* TODO create initialPage */
   return (
     <Document>
       <Page size="A4" style={styles.page}>
