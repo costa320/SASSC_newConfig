@@ -8,7 +8,6 @@ import BarChart from "../../components/ChartComponent/chart.jsx";
 /* REPORT */
 import ReportConfiguration from "../../components/ConfigureReport/reportConfiguration.jsx";
 import GenerateReportCharts from "../../components/ConfigureReport/generateReportCharts.jsx";
-
 /* CSS */
 import "antd/dist/antd.css";
 
@@ -50,8 +49,8 @@ class ConfigureReport extends Component {
                 reportConfiguration={s.reportConfiguration}
               />
             )}
-
-             {/* <BarChart data={chartData} />  */}
+            {/* <button onClick={this.handleClickHtmlToSVG}>HTML TO SVG</button>
+            <BarChart data={chartData} /> */}
           </div>
         </div>
       </div>

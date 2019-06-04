@@ -16,21 +16,24 @@ class BarChart extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      id: "",
       data: undefined,
       radarName: "",
-      detectionName: "",
-      chartContainerName: ""
+      detectionName: ""
     };
   }
 
   componentWillMount() {
-    this.setSTATE("chartContainerName", UUID());
+    let id = this.props.id;
+    console.log(id);
+    this.setSTATE("id", id);
   }
 
   componentDidMount() {
     let data = this.props.data;
     let radarName = this.props.radar;
     let detectionName = this.props.detection;
+
     if (data && data.length >= 1) {
       this.setSTATE("data", data);
       this.setSTATE("radarName", radarName);
@@ -48,10 +51,10 @@ class BarChart extends Component {
     }
   }
 
-  initBarChart(data, chartContainerName) {
+  initBarChart(data, id) {
     if (data && data.length >= 1) {
       var chart = new G2.Chart({
-        container: chartContainerName,
+        container: id,
         forceFit: true,
         height: 290,
         padding: { top: 40, right: 20, bottom: 40, left: 30 },
@@ -100,9 +103,9 @@ class BarChart extends Component {
     return (
       <div>
         {/* when state chage is detected chart is reloaded */}
-        {this.initBarChart(s.data, s.chartContainerName)}
+        {this.initBarChart(s.data, s.id)}
         <h3>{s.radarName + " " + s.detectionName}</h3>
-        <div className="w-100" id={s.chartContainerName} />
+        <div className="w-100" id={s.id} />
       </div>
     );
   }

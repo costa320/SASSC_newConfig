@@ -14,6 +14,7 @@ import "antd/dist/antd.css";
 /* EXTRAS */
 import { getFormattedRadarsData } from "../../extra/api-result-formatter.js";
 import { UUID } from "../../extra/UUID.js";
+import { getNewChartsSVG } from "../../extra/api-htmlToSVG.js";
 /* MOCK */
 import rawDataRadars from "../../config/mockRawDataRadars.json";
 
@@ -33,7 +34,10 @@ class GenerateReportCharts extends Component {
       reportConfiguration: undefined,
       radarsData: undefined,
       /* formattedData */
-      formattedRadarsData: undefined
+      formattedRadarsData: undefined,
+      chartsComponents: [],
+      /* PDF data */
+      chartsData: []
     };
   }
 
@@ -74,6 +78,25 @@ class GenerateReportCharts extends Component {
       });
   }
 
+  handleClickCreatePdf = () => {
+    /* WE WILL UPDATE chartData_ with svgImage of his chart */
+    getNewChartsSVG(this.state.chartsData)
+      .then(res => {
+        console.log(res);
+      })
+      .catch(function(error) {
+        console.log(error);
+        if (process.env.enviroment === "DEV_START") {
+          self.getGeneralNotification("warning", "STAI IN MODALITA DEV!");
+        } else {
+          self.getGeneralNotification(
+            "error",
+            "Non è stato possibile effettuare il caricamento dei dati"
+          );
+        }
+      });
+  };
+
   render() {
     let s = this.state;
     let p = this.props;
@@ -81,12 +104,14 @@ class GenerateReportCharts extends Component {
       <div className="container mt-5">
         <Spin spinning={s.loading} size="large">
           {/* PRINT REPORT */}
-          <ReactToPrint
-            trigger={() => (
-              <Icon className="BackIcon" type="printer" theme="outlined" />
-            )}
-            content={() => this.componentRef}
+
+          <Icon
+            className="BackIcon"
+            type="printer"
+            theme="outlined"
+            onClick={this.handleClickCreatePdf}
           />
+
           <div className="row">
             <div
               className="col-3"
@@ -98,10 +123,8 @@ class GenerateReportCharts extends Component {
             </div>
           </div>
           {/* GENERATE REPORT */}
-          <div className="row" ref={el => (this.componentRef = el)}>
-            <div className="col">
-              {this.generateCharts(s.formattedRadarsData)}
-            </div>
+          <div className="row">
+            <div className="col">{s.chartsComponents}</div>
           </div>
         </Spin>
       </div>
@@ -109,18 +132,35 @@ class GenerateReportCharts extends Component {
   }
 
   processRawData(rawData, reportConfiguration) {
-    let formattedData = getFormattedRadarsData(rawData, reportConfiguration);
-    this.setSTATE("formattedRadarsData", formattedData);
+    if (rawData && reportConfiguration) {
+      /* FORMAT DATA */
+      let formattedData = getFormattedRadarsData(rawData, reportConfiguration);
+      this.setSTATE("formattedRadarsData", formattedData);
+      /* GENERATE CHARTS */
+      this.generateCharts(formattedData);
+    }
   }
 
   generateCharts(formattedRadarsData) {
+    let AllChartsData = [];
     if (formattedRadarsData && formattedRadarsData.length >= 1) {
-      return formattedRadarsData.map(r => {
+      let Charts = formattedRadarsData.map(r => {
         return Object.keys(r.detections).map(detectionKey => {
           let data = r.detections[detectionKey];
+          let id = UUID();
+
+          let newChartsData = {
+            id: id,
+            detectionName: detectionKey,
+            radarName: r.radar
+          };
+
+          AllChartsData.push(newChartsData);
+
           return (
             <BarChart
-              key={UUID()}
+              key={id}
+              id={id}
               data={data}
               radar={r.radar}
               detection={detectionKey}
@@ -128,6 +168,8 @@ class GenerateReportCharts extends Component {
           );
         });
       });
+      this.setSTATE("chartsData", AllChartsData);
+      this.setSTATE("chartsComponents", Charts);
     }
   }
 
