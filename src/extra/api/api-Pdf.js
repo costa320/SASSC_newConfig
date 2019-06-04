@@ -22,7 +22,6 @@ export function generatePdfFromChartsData(reportConfiguration, chartsData) {
 function PDF_Document(reportConfiguration, chartsData) {
   return (
     <PDFViewer style={styles.pdfViewer}>
-      {/* <InitialPage /> */}
       {getInitialPage(reportConfiguration)}
     </PDFViewer>
   );
