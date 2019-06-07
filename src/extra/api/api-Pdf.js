@@ -33,8 +33,12 @@ function PDF_Document(reportConfiguration, chartsData) {
 // Create Document Component
 function getInitialPage(RC) {
   console.log(logoTechnoSky);
-  let dateStart = moment(RC.date.startMoment).format("DD/MM/YYYY");
-  let dateEnd = moment(RC.date.endMoment).format("DD/MM/YYYY");
+  let DS_m = moment(RC.date.startMoment);
+  let DE_m = moment(RC.date.endMoment);
+  let dateStart = DS_m.format("DD/MM/YYYY");
+  let dateEnd = DE_m.format("DD/MM/YYYY");
+  let week1 = DS_m.week();
+  let week2 = DE_m.week();
   /* TODO create initialPage */
   return (
     <Document>
@@ -55,7 +59,7 @@ function getInitialPage(RC) {
             {/* COL3 */}
             <View style={I_P.InfoDocumento}>
               <View style={I_P.DocRef}>
-                <Text>Doc. Ref.: 721_RTP-QUI-2627-RM-ACC</Text>
+                <Text>Doc. Ref.: 721_RTP-QUI-{week1 + "" + week2}-RM-ACC</Text>
               </View>
               <View style={I_P.row}>
                 <View style={I_P.Versione}>
@@ -75,6 +79,26 @@ function getInitialPage(RC) {
             </View>
             <View style={I_P.descrizioneDati}>
               <Text>Dati Radar registrati sul sistema OPEN OPS</Text>
+            </View>
+          </View>
+          {/* MAIN DESCRIPTION */}
+          <View style={I_P.mainDescription}>
+            <View style={I_P.primaParteDescrizione}>
+              <Text>Report Quindicinale</Text>
+            </View>
+            <View style={I_P.secondaParteDescrizione}>
+              <Text>
+                delle settimane {week1}° e {week2}°
+              </Text>
+            </View>
+          </View>
+          {/* SIGN RESPONSIBLE  */}
+          <View style={I_P.ResponsiblesSign}>
+            <View style={I_P.descriptionSign}>
+              <Text>Firma del Responsabile Technosky</Text>
+            </View>
+            <View style={I_P.Sign_}>
+              <Text>FIRMA</Text>
             </View>
           </View>
         </View>
@@ -99,7 +123,8 @@ const I_P = StyleSheet.create({
     backgroundColor: "#ffffff"
   },
   container_: {
-    paddingTop: "25pt"
+    paddingTop: "25pt",
+    border: "1pt solid black"
   },
   row: {
     flexDirection: "row"
@@ -160,11 +185,51 @@ const I_P = StyleSheet.create({
   },
   descrizioneDati: {
     border: "1pt solid red",
-    width: "294,335pt",
+    width: "294pt",
     height: "25pt",
     fontSize: "10pt",
     textAlign: "center",
     paddingTop: "10pt"
+  },
+  /* MAIN CONTAINER DESCRIPTION */
+  mainDescription: {
+    border: "1pt solid black",
+    marginTop: "100pt",
+    marginLeft: "120pt",
+    width: "344,334pt",
+    height: "125pt"
+  },
+  primaParteDescrizione: {
+    flexDirection: "row",
+    textAlign: "center",
+    fontSize: "20pt",
+    marginTop: "25pt"
+  },
+  secondaParteDescrizione: {
+    flexDirection: "row",
+    textAlign: "center",
+    fontSize: "20pt",
+    marginTop: "15pt"
+  },
+  /* MAIN CONTAINER RESPONSIBLES SIGN */
+  ResponsiblesSign: {
+    marginTop: "150pt",
+    marginLeft: "120pt",
+    border: "1pt solid black",
+    height: "125pt",
+    width: "344,334pt"
+  },
+  descriptionSign: {
+    width: "100%",
+    textAlign: "center",
+    height: "50%",
+    paddingTop: "10%"
+  },
+  Sign_: {
+    width: "100%",
+    textAlign: "center",
+    height: "50%",
+    paddingTop: "5%"
   }
 });
 
