@@ -42,7 +42,7 @@ function getInitialPage(RC) {
   /* TODO create initialPage */
   return (
     <Document>
-      <Page size="A4" style={I_P.page} ruler={true}>
+      <Page size="A4" style={I_P.page} ruler={false}>
         {/* HEADER CONTAINER */}
         <View style={I_P.container_}>
           {/* FIRST HEADER ROW */}
@@ -125,9 +125,10 @@ const I_P = StyleSheet.create({
   container_: {
     marginTop: "50pt",
     marginBottom: "50pt",
-    marginLeft: "2pt",
+    marginLeft: "5pt",
+    marginRight: "5pt",
 
-    border: "1pt solid red"
+    border: "2pt solid black"
   },
   row: {
     flexDirection: "row"
@@ -140,24 +141,30 @@ const I_P = StyleSheet.create({
   },
   logo: {
     border: "1pt solid black",
-    width: "191,666pt",
-    height: "50pt"
+    borderLeft: "0pt solid black",
+    borderTop: "0pt solid black",
+    width: "194pt",
+    height: "53pt"
   },
   DescrizioneACC: {
     border: "1pt solid black",
-    width: "191,666pt",
+    borderTop: "0pt solid black",
+    width: "193pt",
     textAlign: "center",
     paddingTop: "9pt",
     fontSize: "14pt",
-    height: "50pt"
+    height: "53pt"
   },
   InfoDocumento: {
     border: "1pt solid black",
-    width: "191,666pt",
+    borderTop: "0pt solid black",
+    borderRight: "0pt solid black",
+    width: "193pt",
     fontSize: "3pt",
-    height: "50pt"
+    height: "53pt"
   },
   DocRef: {
+    borderBottom: "2pt solid black",
     flexDirection: "row",
     textAlign: "center",
     fontSize: "10pt",
@@ -179,16 +186,20 @@ const I_P = StyleSheet.create({
     paddingTop: "10pt"
   },
   periodoOsservazione: {
-    width: "287,5pt",
+    width: "290pt",
     height: "25pt",
     fontSize: "10pt",
     textAlign: "center",
     paddingTop: "10pt",
-    border: "1pt solid black"
+    border: "1pt solid black",
+    borderLeft: "0pt solid black",
+    borderBottom: "2pt solid black"
   },
   descrizioneDati: {
     border: "1pt solid black",
-    width: "287,5pt",
+    borderRight: "0pt solid black",
+    borderBottom: "2pt solid black",
+    width: "290pt",
     height: "25pt",
     fontSize: "10pt",
     textAlign: "center",
@@ -196,7 +207,7 @@ const I_P = StyleSheet.create({
   },
   /* MAIN CONTAINER DESCRIPTION */
   mainDescription: {
-    border: "1pt solid black",
+    border: "2pt solid black",
     marginTop: "100pt",
     marginLeft: "120pt",
     width: "344,334pt",
@@ -218,7 +229,7 @@ const I_P = StyleSheet.create({
   ResponsiblesSign: {
     marginTop: "150pt",
     marginLeft: "120pt",
-    border: "1pt solid black",
+    border: "2pt solid black",
     height: "125pt",
     width: "344,334pt"
   },
