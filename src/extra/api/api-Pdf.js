@@ -123,8 +123,11 @@ const I_P = StyleSheet.create({
     backgroundColor: "#ffffff"
   },
   container_: {
-    paddingTop: "25pt",
-    border: "1pt solid black"
+    marginTop: "50pt",
+    marginBottom: "50pt",
+    marginLeft: "2pt",
+
+    border: "1pt solid red"
   },
   row: {
     flexDirection: "row"
@@ -136,21 +139,21 @@ const I_P = StyleSheet.create({
     marginHorizontal: "10pt"
   },
   logo: {
-    border: "1pt solid red",
-    width: "196,223pt",
+    border: "1pt solid black",
+    width: "191,666pt",
     height: "50pt"
   },
   DescrizioneACC: {
     border: "1pt solid black",
-    width: "196,223pt",
+    width: "191,666pt",
     textAlign: "center",
     paddingTop: "9pt",
     fontSize: "14pt",
     height: "50pt"
   },
   InfoDocumento: {
-    border: "1pt solid green",
-    width: "196,223pt",
+    border: "1pt solid black",
+    width: "191,666pt",
     fontSize: "3pt",
     height: "50pt"
   },
@@ -162,30 +165,30 @@ const I_P = StyleSheet.create({
     paddingTop: "3pt"
   },
   Versione: {
-    width: "96,1115pt",
+    width: "95,8pt",
     textAlign: "center",
     fontSize: "10pt",
     height: "50%",
     paddingTop: "10pt"
   },
   DataCreazione: {
-    width: "96,1115pt",
+    width: "95,8pt",
     textAlign: "center",
     fontSize: "10pt",
     height: "50%",
     paddingTop: "10pt"
   },
   periodoOsservazione: {
-    width: "294,335pt",
+    width: "287,5pt",
     height: "25pt",
     fontSize: "10pt",
     textAlign: "center",
     paddingTop: "10pt",
-    border: "1pt solid red"
+    border: "1pt solid black"
   },
   descrizioneDati: {
-    border: "1pt solid red",
-    width: "294pt",
+    border: "1pt solid black",
+    width: "287,5pt",
     height: "25pt",
     fontSize: "10pt",
     textAlign: "center",
