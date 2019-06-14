@@ -25,7 +25,10 @@ export function generatePdfFromChartsData(reportConfiguration, chartsData) {
 function PDF_Document(reportConfiguration, chartsData) {
   return (
     <PDFViewer style={styles.pdfViewer}>
-      {getInitialPage(reportConfiguration)}
+      <Document>
+        {getInitialPage(reportConfiguration)}
+        {getChartsPages(reportConfiguration, chartsData)}
+      </Document>
     </PDFViewer>
   );
 }
@@ -41,69 +44,132 @@ function getInitialPage(RC) {
   let week2 = DE_m.week();
   /* TODO create initialPage */
   return (
-    <Document>
-      <Page size="A4" style={I_P.page} ruler={false}>
-        {/* HEADER CONTAINER */}
-        <View style={I_P.container_}>
-          {/* FIRST HEADER ROW */}
-          <View style={I_P.row}>
-            {/* COL1 */}
-            <View style={I_P.logo}>
-              <Image src={logoImage} style={I_P.imageLogo} />
-            </View>
-            {/* COL2 */}
-            <View style={I_P.DescrizioneACC}>
-              <Text>Centro Operativo Roma ACC Analisi SASSC</Text>
-            </View>
-
-            {/* COL3 */}
-            <View style={I_P.InfoDocumento}>
-              <View style={I_P.DocRef}>
-                <Text>Doc. Ref.: 721_RTP-QUI-{week1 + "" + week2}-RM-ACC</Text>
-              </View>
-              <View style={I_P.row}>
-                <View style={I_P.Versione}>
-                  <Text>Ed.: 01 Rev.: 00</Text>
-                </View>
-                <View style={I_P.DataCreazione}>
-                  <Text>{moment().format("DD/MM/YYYY")}</Text>
-                </View>
-              </View>
-            </View>
+    <Page size="A4" style={I_P.page} ruler={false}>
+      {/* HEADER CONTAINER */}
+      <View style={I_P.container_}>
+        {/* FIRST HEADER ROW */}
+        {getHeader(dateStart, dateEnd, week1, week2)}
+        {/* MAIN DESCRIPTION */}
+        <View style={I_P.mainDescription}>
+          <View style={I_P.primaParteDescrizione}>
+            <Text>Report Quindicinale</Text>
           </View>
-          <View style={I_P.row}>
-            <View style={I_P.periodoOsservazione}>
-              <Text>
-                Periodo di osservazione dal {dateStart + "-" + dateEnd}
-              </Text>
-            </View>
-            <View style={I_P.descrizioneDati}>
-              <Text>Dati Radar registrati sul sistema OPEN OPS</Text>
-            </View>
-          </View>
-          {/* MAIN DESCRIPTION */}
-          <View style={I_P.mainDescription}>
-            <View style={I_P.primaParteDescrizione}>
-              <Text>Report Quindicinale</Text>
-            </View>
-            <View style={I_P.secondaParteDescrizione}>
-              <Text>
-                delle settimane {week1}° e {week2}°
-              </Text>
-            </View>
-          </View>
-          {/* SIGN RESPONSIBLE  */}
-          <View style={I_P.ResponsiblesSign}>
-            <View style={I_P.descriptionSign}>
-              <Text>Firma del Responsabile Technosky</Text>
-            </View>
-            <View style={I_P.Sign_}>
-              <Text>FIRMA</Text>
-            </View>
+          <View style={I_P.secondaParteDescrizione}>
+            <Text>
+              delle settimane {week1}° e {week2}°
+            </Text>
           </View>
         </View>
-      </Page>
-    </Document>
+        {/* SIGN RESPONSIBLE  */}
+        <View style={I_P.ResponsiblesSign}>
+          <View style={I_P.descriptionSign}>
+            <Text>Firma del Responsabile Technosky</Text>
+          </View>
+          <View style={I_P.Sign_}>
+            <Text>FIRMA</Text>
+          </View>
+        </View>
+      </View>
+    </Page>
+  );
+}
+
+function getChartsPages(RC, chartsData) {
+  /* LOGICA DI CALCOLO DELLE PAGINE  */
+  let numPagine = Math.ceil(chartsData.length / 4);
+  let arrayOfPages = [];
+  let numCharts = 0;
+
+  for (let i = 0; i < numPagine; i++) {
+    // numCharts non viene incrementato dentro una chiamata ad una funzione x.slice(numCharts,numCharts+4)
+    let chartForSinglePage =
+      numCharts === 0
+        ? chartsData.slice(0, numCharts + 4)
+        : chartsData.slice(numCharts, numCharts + 4);
+    /* numcharts viene incrementato realmente */
+    numCharts += 4;
+    /* creo la pagina */
+    let newPage = getNewChartPage(RC, chartForSinglePage);
+    arrayOfPages.push(newPage);
+  }
+  return arrayOfPages;
+}
+
+function getHeader(dateStart, dateEnd, week1, week2) {
+  return [
+    <View style={I_P.row}>
+      {/* COL1 */}
+      <View style={I_P.logo}>
+        <Image src={logoImage} style={I_P.imageLogo} />
+      </View>
+      {/* COL2 */}
+      <View style={I_P.DescrizioneACC}>
+        <Text>Centro Operativo Roma ACC Analisi SASSC</Text>
+      </View>
+
+      {/* COL3 */}
+      <View style={I_P.InfoDocumento}>
+        <View style={I_P.DocRef}>
+          <Text>Doc. Ref.: 721_RTP-QUI-{week1 + "" + week2}-RM-ACC</Text>
+        </View>
+        <View style={I_P.row}>
+          <View style={I_P.Versione}>
+            <Text>Ed.: 01 Rev.: 00</Text>
+          </View>
+          <View style={I_P.DataCreazione}>
+            <Text>{moment().format("DD/MM/YYYY")}</Text>
+          </View>
+        </View>
+      </View>
+    </View>,
+    <View style={I_P.row}>
+      <View style={I_P.periodoOsservazione}>
+        <Text>Periodo di osservazione dal {dateStart + "-" + dateEnd}</Text>
+      </View>
+      <View style={I_P.descrizioneDati}>
+        <Text>Dati Radar registrati sul sistema OPEN OPS</Text>
+      </View>
+    </View>
+  ];
+}
+
+function getNewChartPage(RC, chartsData) {
+  let DS_m = moment(RC.date.startMoment),
+    DE_m = moment(RC.date.endMoment),
+    dateStart = DS_m.format("DD/MM/YYYY"),
+    dateEnd = DE_m.format("DD/MM/YYYY"),
+    week1 = DS_m.week(),
+    week2 = DE_m.week();
+
+  return (
+    <Page size="A4" style={I_P.page} ruler={false}>
+      {/* HEADER CONTAINER */}
+      <View style={I_P.container_}>
+        {/* FIRST HEADER ROW */}
+        {getHeader(dateStart, dateEnd, week1, week2)}
+        {/* MAIN CHARTS PAGE */}
+        {chartsData.map(chartD => {
+          return getChartFrame(RC, chartD);
+        })}
+      </View>
+    </Page>
+  );
+}
+
+function getChartFrame(RC, objChartData) {
+  let localChartImage = {
+    uri: objChartData.pngChartImage,
+    method: "GET",
+    headers: {},
+    body: ""
+  };
+  return (
+    <View style={C_F.row}>
+      <Text key={objChartData.id}>{objChartData.detectionName}</Text>
+      <View style={C_F.logo}>
+        <Image src={localChartImage} style={C_F.imageLogo} />
+      </View>
+    </View>
   );
 }
 
@@ -115,7 +181,7 @@ const logoImage = {
   body: ""
 };
 
-/* STYLES OF INITIAL PAGE */
+/* STYLES OF INITIAL PAGE AND HEADER*/
 const I_P = StyleSheet.create({
   page: {
     width: "100%",
@@ -246,8 +312,24 @@ const I_P = StyleSheet.create({
     paddingTop: "5%"
   }
 });
+/* STYLES OF CHART FRAMES */
+const C_F = StyleSheet.create({
+  row: {
+    flexDirection: "row"
+  },
+  logo: {
+    border: "1pt solid black",
+    /*   borderLeft: "0pt solid black", */
+    width: "194pt",
+    height: "53pt"
+  },
+  imageLogo: {
+    height: "90%",
+    width: "90%"
+  }
+});
 
-// Create styles
+// GENERAL STYLES
 const styles = StyleSheet.create({
   pdfViewer: {
     width: "100%",
