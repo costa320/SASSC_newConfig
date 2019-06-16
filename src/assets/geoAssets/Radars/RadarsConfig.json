@@ -91,7 +91,8 @@
             "radarRange": "200NM"
         }
     ],
-    "radarList": [{
+    "radarList": [
+        {
             "value": "fm",
             "text": "Fiumicino APP1"
         },

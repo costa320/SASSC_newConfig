@@ -12,6 +12,11 @@ import {
   Document,
   StyleSheet
 } from "@react-pdf/renderer";
+/* EXTRA API RADARCONFIG */
+import {
+  getRadarObjByName,
+  getDetectionObjByName
+} from "../../assets/geoAssets/Radars/RadarsConfig-API.js";
 /* ASSETS */
 import logoTechnoSky from "../../assets/PDF_assets/images/technosky_logo.jpg";
 
@@ -142,21 +147,21 @@ function getNewChartPage(RC, chartsData) {
     week2 = DE_m.week();
 
   return (
-    <Page size="A4" style={I_P.page} ruler={false}>
+    <Page size="A4" style={C_F.page} ruler={true}>
       {/* HEADER CONTAINER */}
-      <View style={I_P.container_}>
+      <View style={C_F.container_}>
         {/* FIRST HEADER ROW */}
         {getHeader(dateStart, dateEnd, week1, week2)}
         {/* MAIN CHARTS PAGE */}
-        {chartsData.map(chartD => {
-          return getChartFrame(RC, chartD);
+        {chartsData.map((chartD, i) => {
+          return getChartFrame(RC, chartD, i);
         })}
       </View>
     </Page>
   );
 }
 
-function getChartFrame(RC, objChartData) {
+function getChartFrame(RC, objChartData, numChartInPage) {
   let localChartImage = {
     uri: objChartData.pngChartImage,
     method: "GET",
@@ -164,10 +169,38 @@ function getChartFrame(RC, objChartData) {
     body: ""
   };
   return (
-    <View style={C_F.row}>
-      <Text key={objChartData.id}>{objChartData.detectionName}</Text>
-      <View style={C_F.logo}>
-        <Image src={localChartImage} style={C_F.imageLogo} />
+    <View
+      style={!numChartInPage ? C_F.row_ChartFrame : C_F.rowNormalChartFrame}
+      key={objChartData.id}
+    >
+      <View style={C_F.InfoContainer}>
+        {/* DESCRIPTION SECTION*/}
+        <View style={C_F.row}>
+          <View style={C_F.DescriptionSec}>
+            <Text>
+              {"Valore medio " +
+                getRadarObjByName(objChartData.radarName).text +
+                " " +
+                getDetectionObjByName(objChartData.detectionName).text +
+                " "}
+            </Text>
+          </View>
+        </View>
+        {/* MIDDLE VALUE SECTION*/}
+        <View style={C_F.row}>
+          <View style={C_F.MiddleValueSec}>
+            <Text>99</Text>
+          </View>
+        </View>
+        {/* NOTES SECTION*/}
+        <View style={C_F.row}>
+          <View style={C_F.NotesSec}>
+            <Text>Note: </Text>
+          </View>
+        </View>
+      </View>
+      <View style={C_F.chartContainer}>
+        <Image src={localChartImage} style={C_F.chartImage} />
       </View>
     </View>
   );
@@ -314,18 +347,66 @@ const I_P = StyleSheet.create({
 });
 /* STYLES OF CHART FRAMES */
 const C_F = StyleSheet.create({
+  page: {
+    width: "100%",
+    flexDirection: "row",
+    backgroundColor: "#ffffff"
+  },
+  container_: {
+    marginRight: "5pt",
+    marginBottom: "10pt",
+    border: "2pt solid black"
+  },
   row: {
     flexDirection: "row"
   },
-  logo: {
+  rowNormalChartFrame: {
+    flexDirection: "row",
+    marginBottom: "2pt"
+  },
+  row_ChartFrame: {
+    marginTop: "20pt",
+    flexDirection: "row",
+    marginBottom: "2pt"
+  },
+  chartContainer: {
     border: "1pt solid black",
     /*   borderLeft: "0pt solid black", */
-    width: "194pt",
-    height: "53pt"
+    width: "55%",
+    height: "180pt",
+    /* like float right */
+    justifyContent: "center",
+    right: "0pt"
   },
-  imageLogo: {
-    height: "90%",
-    width: "90%"
+  chartImage: {
+    height: "100%",
+    width: "100%"
+  },
+  /* SECTION CONTAINER */
+  InfoContainer: {
+    border: "2pt solid black",
+    width: "43%",
+    height: "180pt"
+  },
+  /* SECTIONS */
+  DescriptionSec: {
+    borderBottom: "2pt solid black",
+    height: "45pt",
+    width: "100%",
+    textAlign: "center",
+    fontSize: "10pt"
+  },
+  MiddleValueSec: {
+    fontSize: "15pt",
+    borderBottom: "2pt solid black",
+    height: "60pt",
+    width: "100%",
+    textAlign: "center"
+  },
+  NotesSec: {
+    fontSize: "10pt",
+    height: "75pt",
+    width: "100%"
   }
 });
 
