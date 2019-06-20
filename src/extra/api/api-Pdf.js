@@ -147,21 +147,21 @@ function getNewChartPage(RC, chartsData) {
     week2 = DE_m.week();
 
   return (
-    <Page size="A4" style={C_F.page} ruler={true}>
+    <Page size="A4" style={C_F.page} ruler={false}>
       {/* HEADER CONTAINER */}
       <View style={C_F.container_}>
         {/* FIRST HEADER ROW */}
         {getHeader(dateStart, dateEnd, week1, week2)}
         {/* MAIN CHARTS PAGE */}
-        {chartsData.map((chartD, i) => {
-          return getChartFrame(RC, chartD, i);
+        {chartsData.map((chartD, i, arrayChartsData) => {
+          return getChartFrame(RC, chartD, i, arrayChartsData);
         })}
       </View>
     </Page>
   );
 }
 
-function getChartFrame(RC, objChartData, numChartInPage) {
+function getChartFrame(RC, objChartData, numChartInPage, arrayChartsData) {
   let localChartImage = {
     uri: objChartData.pngChartImage,
     method: "GET",
@@ -170,14 +170,22 @@ function getChartFrame(RC, objChartData, numChartInPage) {
   };
   return (
     <View
-      style={!numChartInPage ? C_F.row_ChartFrame : C_F.rowNormalChartFrame}
       key={objChartData.id}
+      style={
+        numChartInPage === 0 ? C_F.row_firstChartFrame : C_F.rowNormalChartFrame
+      }
     >
-      <View style={C_F.InfoContainer}>
+      <View
+        style={
+          numChartInPage === arrayChartsData.length - 1
+            ? C_F.LastInfoContainerOnPage
+            : C_F.InfoContainer
+        }
+      >
         {/* DESCRIPTION SECTION*/}
         <View style={C_F.row}>
           <View style={C_F.DescriptionSec}>
-            <Text>
+            <Text style={C_F.DescriptionSecText}>
               {"Valore medio " +
                 getRadarObjByName(objChartData.radarName).text +
                 " " +
@@ -189,7 +197,7 @@ function getChartFrame(RC, objChartData, numChartInPage) {
         {/* MIDDLE VALUE SECTION*/}
         <View style={C_F.row}>
           <View style={C_F.MiddleValueSec}>
-            <Text>99</Text>
+            <Text style={C_F.MiddleValueSecText}>99</Text>
           </View>
         </View>
         {/* NOTES SECTION*/}
@@ -199,7 +207,13 @@ function getChartFrame(RC, objChartData, numChartInPage) {
           </View>
         </View>
       </View>
-      <View style={C_F.chartContainer}>
+      <View
+        style={
+          numChartInPage === arrayChartsData.length - 1
+            ? C_F.lastChartContainerOnPage
+            : C_F.chartContainer
+        }
+      >
         <Image src={localChartImage} style={C_F.chartImage} />
       </View>
     </View>
@@ -214,7 +228,7 @@ const logoImage = {
   body: ""
 };
 
-/* STYLES OF INITIAL PAGE AND HEADER*/
+/* STYLES OF INITIAL PAGE AND HEADER */
 const I_P = StyleSheet.create({
   page: {
     width: "100%",
@@ -354,6 +368,7 @@ const C_F = StyleSheet.create({
   },
   container_: {
     marginRight: "5pt",
+    marginLeft: "5pt",
     marginBottom: "10pt",
     border: "2pt solid black"
   },
@@ -361,19 +376,28 @@ const C_F = StyleSheet.create({
     flexDirection: "row"
   },
   rowNormalChartFrame: {
-    flexDirection: "row",
-    marginBottom: "2pt"
+    flexDirection: "row"
   },
-  row_ChartFrame: {
+  row_firstChartFrame: {
     marginTop: "20pt",
-    flexDirection: "row",
-    marginBottom: "2pt"
+    flexDirection: "row"
   },
+  /* CHART CONTAINER */
   chartContainer: {
-    border: "1pt solid black",
-    /*   borderLeft: "0pt solid black", */
+    border: "2pt solid black",
+    borderLeft: "0pt solid black",
+    borderBottom: "0pt solid black",
     width: "55%",
-    height: "180pt",
+    height: "183pt",
+    /* like float right */
+    justifyContent: "center",
+    right: "0pt"
+  },
+  lastChartContainerOnPage: {
+    border: "2pt solid black",
+    borderLeft: "0pt solid black",
+    width: "55%",
+    height: "183pt",
     /* like float right */
     justifyContent: "center",
     right: "0pt"
@@ -385,27 +409,44 @@ const C_F = StyleSheet.create({
   /* SECTION CONTAINER */
   InfoContainer: {
     border: "2pt solid black",
-    width: "43%",
-    height: "180pt"
+    borderLeft: "0pt solid black",
+    borderBottom: "0pt solid black",
+    width: "45%",
+    height: "183pt"
   },
+  LastInfoContainerOnPage: {
+    border: "2pt solid black",
+    borderLeft: "0pt solid black",
+    width: "45%",
+    height: "183pt"
+  },
+
   /* SECTIONS */
   DescriptionSec: {
     borderBottom: "2pt solid black",
     height: "45pt",
     width: "100%",
     textAlign: "center",
-    fontSize: "10pt"
+    fontSize: "13pt"
+  },
+  DescriptionSecText: {
+    marginTop: "5%",
+    fontWeight: "3pt"
   },
   MiddleValueSec: {
-    fontSize: "15pt",
+    fontSize: "18pt",
     borderBottom: "2pt solid black",
     height: "60pt",
     width: "100%",
     textAlign: "center"
   },
+  MiddleValueSecText: {
+    marginTop: "9%",
+    fontWeight: "30pt"
+  },
   NotesSec: {
     fontSize: "10pt",
-    height: "75pt",
+    height: "78pt",
     width: "100%"
   }
 });

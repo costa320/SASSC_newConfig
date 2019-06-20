@@ -68,10 +68,59 @@ class BarChart extends Component {
           radius: {number} //Chart fillet size */
         }
       });
-      chart.source(data);
+      /* AXIS */
+      chart.axis("value", {
+        line: {
+          lineWidth: 2,
+          stroke: "black"
+        },
+        tickLine: {
+          lineWidth: 2,
+          length: 5,
+          stroke: "black",
+          alignWithLabel: true
+        },
+        label: {
+          textStyle: {
+            fontSize: 14,
+            fontWeight: "bold",
+            fill: "black"
+          }
+        }
+      });
+      chart.axis("date", {
+        line: {
+          lineWidth: 2,
+          stroke: "black"
+        },
+        tickLine: {
+          lineWidth: 2,
+          length: 7,
+          stroke: "black",
+          alignWithLabel: true
+        },
+        label: {
+          htmlTemplate: (val, item, index) => {
+            return `<span style="
+                                  font-weight:bold;
+                                  font-size:14px;
+                                  color:"black">
+                      ${val.substring(3)}
+                    </span>`;
+          }
+        }
+      });
+      /* END AXIS */
 
+      /* TOOLTIP */
+      chart.tooltip({
+        triggerOn: "click"
+      });
+
+      chart.source(data);
+      /* TICKS */
       chart.scale("value", {
-        tickInterval: 20
+        tickInterval: 10
       });
 
       chart
@@ -87,9 +136,29 @@ class BarChart extends Component {
           offset: 15,
           textStyle: {
             textAlign: "center",
-            fontSize: 11,
-            shadowBlur: 2,
-            shadowColor: "rgba(0, 0, 0, .45)"
+            fontSize: 13,
+            fontWeight: "bold"
+          },
+          htmlTemplate: (text, item, index) => {
+            let value;
+            let error_ = false;
+            try {
+              value = Number(text);
+            } catch (err) {
+              error_ = true;
+            }
+            if (!value) error_ = true;
+            if (item && !error_) {
+              let color = value < 90 ? "red" : "black";
+              return `<span style="
+                                  font-weight:bold;
+                                  font-size:14px;
+                                  color:${color}">
+                      ${value}
+                    </span>`;
+            } else {
+              return "<span></span>";
+            }
           }
         });
 

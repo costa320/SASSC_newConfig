@@ -49,8 +49,14 @@ class ConfigureReport extends Component {
                 reportConfiguration={s.reportConfiguration}
               />
             )}
-            {/* <button onClick={this.handleClickHtmlToSVG}>HTML TO SVG</button>
-            <BarChart data={chartData} /> */}
+            {/*  <button onClick={this.handleClickHtmlToSVG}>HTML TO SVG</button> */}
+            <BarChart
+              key={"1"}
+              id={"1"}
+              radar={"FM_prova"}
+              detection={"PROVA"}
+              data={chartData}
+            />
           </div>
         </div>
       </div>
