@@ -103,12 +103,16 @@ function fill_RESULT_withAverageResults(unfilledResult) {
     Object.keys(radar.detections).forEach((detectionKey, i_detection) => {
       let media = 0;
       let arrayLength = unfilledResult[i_radar].detections[detectionKey].length;
+      let numberOfValues = 0;
       unfilledResult[i_radar].detections[detectionKey].forEach(
-        singleElementDay => {
-          media += singleElementDay.value;
+        (singleElementDay, i) => {
+          if (singleElementDay.value) {
+            numberOfValues++;
+            media += singleElementDay.value;
+          }
         }
       );
-      media /= arrayLength - 1;
+      media /= numberOfValues;
       /* AGGIORNO IL VALORE DELLA MEDIA DI QUESTA DETENZIONE */
       newRESULT[i_radar].average[detectionKey] = media;
     });
