@@ -50,13 +50,13 @@ class ConfigureReport extends Component {
               />
             )}
             {/*  <button onClick={this.handleClickHtmlToSVG}>HTML TO SVG</button> */}
-            <BarChart
+            {/* <BarChart
               key={"1"}
               id={"1"}
               radar={"FM_prova"}
               detection={"PROVA"}
               data={chartData}
-            />
+            /> */}
           </div>
         </div>
       </div>

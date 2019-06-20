@@ -17,6 +17,7 @@ export function getFormattedRadarsData(rawData, configFilter) {
   /* Fill up all detections with data */
 
   RESULT = getValuedResult(RESULT, rawData);
+  RESULT = fill_RESULT_withAverageResults(RESULT);
   /*  console.log(RESULT); */
   return RESULT;
 }
@@ -83,12 +84,35 @@ function getInitRESULT(rawData, configFilter) {
   return configFilter.RadarsValues.map(radar => {
     let newRadar = {
       radar: radar,
-      detections: {}
+      detections: {},
+      average: {}
     };
     configFilter.DetectionsValues.map(detection => {
       newRadar.detections[detection] = [];
+      newRadar.average[detection] = 0;
     });
 
     return newRadar;
   });
+}
+
+function fill_RESULT_withAverageResults(unfilledResult) {
+  let newRESULT = unfilledResult;
+
+  unfilledResult.forEach((radar, i_radar) => {
+    Object.keys(radar.detections).forEach((detectionKey, i_detection) => {
+      let media = 0;
+      let arrayLength = unfilledResult[i_radar].detections[detectionKey].length;
+      unfilledResult[i_radar].detections[detectionKey].forEach(
+        singleElementDay => {
+          media += singleElementDay.value;
+        }
+      );
+      media /= arrayLength - 1;
+      /* AGGIORNO IL VALORE DELLA MEDIA DI QUESTA DETENZIONE */
+      newRESULT[i_radar].average[detectionKey] = media;
+    });
+  });
+
+  return newRESULT;
 }

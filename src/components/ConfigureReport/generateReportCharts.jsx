@@ -80,7 +80,7 @@ class GenerateReportCharts extends Component {
   handleClickCreatePdf = () => {
     let self = this;
     /* WE WILL UPDATE chartData_ with svgImage of his chart */
-    getNewChartsPNG(this.state.chartsData)
+    getNewChartsPNG(this.state.chartsData, this.state.formattedRadarsData)
       .then(res => {
         console.log(res);
         self.setSTATE("chartsData", res);

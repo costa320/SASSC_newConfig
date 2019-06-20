@@ -197,7 +197,9 @@ function getChartFrame(RC, objChartData, numChartInPage, arrayChartsData) {
         {/* MIDDLE VALUE SECTION*/}
         <View style={C_F.row}>
           <View style={C_F.MiddleValueSec}>
-            <Text style={C_F.MiddleValueSecText}>99</Text>
+            <Text style={C_F.MiddleValueSecText}>
+              {objChartData.average.toFixed(2)}
+            </Text>
           </View>
         </View>
         {/* NOTES SECTION*/}
