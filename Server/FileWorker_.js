@@ -206,15 +206,29 @@ function manageNewDay(dayOBJ) {
       path.resolve(__dirname, "../Server/database/Years/" + data_yy)
     )
   ) {
+    console.log("++++++++++++++++++++++++++++++++++++++++");
+    console.log(
+      "CREO LA CARTELLA DELL ANNO",
+      path.resolve(__dirname, "../Server/database/Years/" + data_yy)
+    );
+    console.log("++++++++++++++++++++++++++++++++++++++++");
+
     fs.mkdirSync(
       path.resolve(__dirname, "../Server/database/Years/" + data_yy)
     );
   }
+  /* Se la directory di questo mese non esiste la creo */
   if (
     !fs.existsSync(
       path.resolve(__dirname, "../Server/database/Years/" + data_yy, data_mm)
     )
   ) {
+    console.log("++++++++++++++++++++++++++++++++++++++++");
+    console.log(
+      "CREO LA CARTELLA DELL MESE",
+      path.resolve(__dirname, "../Server/database/Years/" + data_yy, data_mm)
+    );
+    console.log("++++++++++++++++++++++++++++++++++++++++");
     fs.mkdirSync(
       path.resolve(__dirname, "../Server/database/Years/" + data_yy, data_mm)
     );
