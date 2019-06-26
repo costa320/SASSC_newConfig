@@ -47,7 +47,6 @@ function getInitialPage(RC) {
   let dateEnd = DE_m.format("DD/MM/YYYY");
   let week1 = DS_m.week();
   let week2 = DE_m.week();
-  /* TODO create initialPage */
   return (
     <Page size="A4" style={I_P.page} ruler={false}>
       {/* HEADER CONTAINER */}

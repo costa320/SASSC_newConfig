@@ -206,6 +206,7 @@ function manageNewDay(dayOBJ) {
     __dirname,
     "../Server/dataBase/Years/" + data_yy
   );
+  /* TODO control if server is uploading right file, and why its not displaying anymore console logs...  */
   let yearDirExist = fs.existsSync(yearNewDirPath);
   if (!yearDirExist) {
     console.log("++++++++++++++++++++++++++++++++++++++++");
