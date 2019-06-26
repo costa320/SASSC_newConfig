@@ -203,34 +203,34 @@ function manageNewDay(dayOBJ) {
   /* Se la directory di Questo Anno non esiste la creo */
   if (
     !fs.existsSync(
-      path.resolve( "../Server/database/Years/" + data_yy)
+      path.resolve(__dirname, "../Server/dataBase/Years/" + data_yy)
     )
   ) {
     console.log("++++++++++++++++++++++++++++++++++++++++");
     console.log(
       "CREO LA CARTELLA DELL ANNO",
-      path.resolve( "../Server/database/Years/" + data_yy)
+      path.resolve(__dirname, "../Server/dataBase/Years/" + data_yy)
     );
     console.log("++++++++++++++++++++++++++++++++++++++++");
 
     fs.mkdirSync(
-      path.resolve( "../Server/database/Years/" + data_yy)
+      path.resolve(__dirname, "../Server/dataBase/Years/" + data_yy)
     );
   }
   /* Se la directory di questo mese non esiste la creo */
   if (
     !fs.existsSync(
-      path.resolve( "../Server/database/Years/" + data_yy, data_mm)
+      path.resolve(__dirname, "../Server/dataBase/Years/" + data_yy, data_mm)
     )
   ) {
     console.log("++++++++++++++++++++++++++++++++++++++++");
     console.log(
       "CREO LA CARTELLA DELL MESE",
-      path.resolve( "../Server/database/Years/" + data_yy, data_mm)
+      path.resolve(__dirname, "../Server/dataBase/Years/" + data_yy, data_mm)
     );
     console.log("++++++++++++++++++++++++++++++++++++++++");
     fs.mkdirSync(
-      path.resolve( "../Server/database/Years/" + data_yy, data_mm)
+      path.resolve(__dirname, "../Server/dataBase/Years/" + data_yy, data_mm)
     );
   }
   /* A QUESTO PUNTO ESISTE SIA LA DIRECTORY DELL'ANNO IN QUESTIONE CHE LA DIRECTORY DEL MESE IN QUESTIONE ESISTONO*/
