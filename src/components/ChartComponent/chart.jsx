@@ -105,7 +105,7 @@ class BarChart extends Component {
                                   font-weight:bold;
                                   font-size:14px;
                                   color:"black">
-                      ${val.substring(3)}
+                      ${val.substring(6, 8)}
                     </span>`;
           }
         }
