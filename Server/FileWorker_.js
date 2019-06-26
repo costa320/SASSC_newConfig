@@ -202,17 +202,21 @@ function manageNewDay(dayOBJ) {
 
   /* Se la directory di Questo Anno non esiste la creo */
   if (
-    !fs.existsSync(path.resolve(__dirname, "../Server/database/Years", data_yy))
-  ) {
-    fs.mkdirSync(path.resolve(__dirname, "../Server/database/Years", data_yy));
-  }
-  if (
     !fs.existsSync(
-      path.resolve(__dirname, "../Server/database/Years", data_yy, data_mm)
+      path.resolve(__dirname, "../Server/database/Years/" + data_yy)
     )
   ) {
     fs.mkdirSync(
-      path.resolve(__dirname, "../Server/database/Years", data_yy, data_mm)
+      path.resolve(__dirname, "../Server/database/Years/" + data_yy)
+    );
+  }
+  if (
+    !fs.existsSync(
+      path.resolve(__dirname, "../Server/database/Years/" + data_yy, data_mm)
+    )
+  ) {
+    fs.mkdirSync(
+      path.resolve(__dirname, "../Server/database/Years/" + data_yy, data_mm)
     );
   }
   /* A QUESTO PUNTO ESISTE SIA LA DIRECTORY DELL'ANNO IN QUESTIONE CHE LA DIRECTORY DEL MESE IN QUESTIONE ESISTONO*/
