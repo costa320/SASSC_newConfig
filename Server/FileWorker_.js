@@ -235,7 +235,7 @@ function manageNewDay(dayOBJ) {
 
   let pathOfFile = path.resolve(
     __dirname,
-    "../Server/database/Years/" + data_yy,
+    "../Server/dataBase/Years/" + data_yy,
     data_mm,
     data_gg + ".json"
   );
