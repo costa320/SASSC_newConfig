@@ -76,7 +76,7 @@ exports.UpdateDataBase = () => {
     console.log("Database Successfully updated!");
   } catch (err) {
     console.log(err);
-    console.log("Update action failed!");
+    console.log("Alert!! Update action failed!");
   }
 };
 
@@ -236,6 +236,7 @@ function writeFile(urlOfFile, data) {
     fileNum++;
     if (err) {
       console.log("ERROR : File number " + fileNum);
+      console.log("FILE PATH: " + urlOfFile);
       throw err;
     }
     console.log("The file number: " + fileNum + " has been saved!");
