@@ -7,7 +7,7 @@ var {
 } = require("./FileReader");
 var moment = require("moment");
 
-const dataBaseDIR = "./database/Years";
+const dataBaseDIR = "./dataBase/Years";
 let fileNum = 0;
 /* date:Object {startMoment: "2019-05-01T11:32:59.183Z", endMoment: "2019-05-31T11:32:59.183Z"}
 DetectionsValues:Array(2) ["pdRC", "pdPR"]

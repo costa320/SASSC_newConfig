@@ -15,7 +15,7 @@ exports.getFilesContentByDateRangeByRadarsByDetections = array_YY_MM => {
       let date_MM = month.date.split("-")[1] + "_mm";
       let dirPath = path.resolve(
         __dirname,
-        "./database/Years/",
+        "./dataBase/Years/",
         date_YYYY,
         date_MM
       );
@@ -77,7 +77,7 @@ function readFileAsync(filename, enc = "UTF-8") {
 //   let DirPath = month.date.split("-");
 //   DirPath = DirPath[0] + "_yy/" + DirPath[1] + "_mm";
 
-//   let dir = path.resolve(__dirname, "./database/Years", DirPath);
+//   let dir = path.resolve(__dirname, "./dataBase/Years", DirPath);
 
 //   readDirAsync(dir)
 //     .then(result => {
