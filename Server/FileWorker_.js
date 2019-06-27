@@ -250,10 +250,15 @@ function writeFile(urlOfFile, data) {
   fs.writeFile(urlOfFile, data, "utf8", err => {
     fileNum++;
     if (err) {
+      console.log("----------------------------------------------");
       console.log("ERROR : File number " + fileNum);
       console.log("FILE PATH: " + urlOfFile);
+      console.log("----------------------------------------------");
       throw err;
     }
-    console.log("The file number: " + fileNum + " has been saved!");
+    console.log("----------------------------------------------");
+    console.log("The file number: ", fileNum, " has been saved!");
+    console.log("FILE PATH: ", urlOfFile);
+    console.log("----------------------------------------------");
   });
 }
