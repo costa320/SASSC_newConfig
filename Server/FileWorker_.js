@@ -8,7 +8,7 @@ var {
 var moment = require("moment");
 
 const dataBaseDIR = "./database/Years";
-
+let fileNum = 0;
 /* date:Object {startMoment: "2019-05-01T11:32:59.183Z", endMoment: "2019-05-31T11:32:59.183Z"}
 DetectionsValues:Array(2) ["pdRC", "pdPR"]
 RadarsValues:Array(2) ["fm", "mc"]
@@ -43,41 +43,59 @@ exports.getRadarDataByDateRange = requestConfig => {
 };
 
 exports.manageArrayDays = arrayDays => {
-  let formattedArrayOfDays = arrayDays.map(day => {
-    let formattedDay = {};
-    formattedDay["data"] = day.data;
+  /* TODO 4 manageArrayDays */
 
-    let RadarsOBJ = {};
-    day.Radars.map((i, radar) => {
-      let formattedValues = {};
-      radar.values.map((x, det) => {
-        let detenzionePulita = det.detenzione.replace(/\s/g, "");
-        detenzionePulita = detenzionePulita.replace("/\\n/g", "");
-        x !== 0
-          ? (formattedValues[detenzionePulita] = det.value
-              .replace("/\\n/g", "")
-              .replace(/\s/g, ""))
-          : "";
+  return new Promise((res, reg) => {
+    try {
+      let formattedArrayOfDays = arrayDays.map(day => {
+        let formattedDay = {};
+        formattedDay["data"] = day.data;
+
+        let RadarsOBJ = {};
+        day.Radars.map((i, radar) => {
+          let formattedValues = {};
+          radar.values.map((x, det) => {
+            let detenzionePulita = det.detenzione.replace(/\s/g, "");
+            detenzionePulita = detenzionePulita.replace("/\\n/g", "");
+            x !== 0
+              ? (formattedValues[detenzionePulita] = det.value
+                  .replace("/\\n/g", "")
+                  .replace(/\s/g, ""))
+              : "";
+          });
+          i !== 0 ? (RadarsOBJ[radar.radar] = formattedValues) : "";
+        });
+
+        formattedDay["radars"] = RadarsOBJ;
+        return formattedDay;
       });
-      i !== 0 ? (RadarsOBJ[radar.radar] = formattedValues) : "";
-    });
-
-    formattedDay["radars"] = RadarsOBJ;
-    return formattedDay;
-  });
-  formattedArrayOfDays.map(day => {
-    manageNewDay(day);
+      formattedArrayOfDays.map(day => {
+        manageNewDay(day);
+      });
+      fileNum = 0;
+      res();
+    } catch (err) {
+      fileNum = 0;
+      reg(err);
+    }
   });
 };
 
 exports.UpdateDataBase = () => {
-  try {
-    HtmlJsonUtils.ParseAllFilesInDirectory();
-    console.log("Database Successfully updated!");
-  } catch (err) {
-    console.log(err);
-    console.log("Alert!! Update action failed!");
-  }
+  /* TODO 2 updateDataBase */
+  return new Promise((res, reg) => {
+    /* NEW PROMISE */
+    HtmlJsonUtils.ParseAllFilesInDirectory()
+      .then(result => {
+        /* console.log("Database Successfully updated!"); */
+        res();
+      })
+      .catch(function(error) {
+        console.log(error);
+        /* console.log("Alert!! Update action failed!"); */
+        reg(error);
+      });
+  });
 };
 
 function getMonthsBeetweenTwoDates(startDate_moment, endDateMoment) {
@@ -244,21 +262,39 @@ function manageNewDay(dayOBJ) {
   writeFile(pathOfFile, data);
 }
 
-let fileNum = 0;
-
 function writeFile(urlOfFile, data) {
   fs.writeFile(urlOfFile, data, "utf8", err => {
     fileNum++;
     if (err) {
       console.log("----------------------------------------------");
       console.log("ERROR : File number " + fileNum);
-      console.log("FILE PATH: " + urlOfFile);
-      console.log("----------------------------------------------");
+      /* console.log("FILE PATH: " + urlOfFile);
+      console.log("----------------------------------------------"); */
       throw err;
     }
     console.log("----------------------------------------------");
     console.log("The file number: ", fileNum, " has been saved!");
-    console.log("FILE PATH: ", urlOfFile);
-    console.log("----------------------------------------------");
+    /*  console.log("FILE PATH: ", urlOfFile);
+    console.log("----------------------------------------------"); */
   });
 }
+
+exports.DELETE_ALL_FILES_INSIDE_UPLOAD = () => {
+  return new Promise((res, reg) => {
+    let directory = path.resolve(__dirname, "Upload");
+    try {
+      fs.readdir(directory, (err, files) => {
+        if (err) throw err;
+
+        for (const file of files) {
+          fs.unlink(path.join(directory, file), err => {
+            if (err) throw err;
+          });
+        }
+      });
+      res("DIRECTORY UPLOAD CLEANED/all files inside DELETED");
+    } catch (err) {
+      reg("ALERT: cant clean/delete all files inside directory UPLOAD");
+    }
+  });
+};

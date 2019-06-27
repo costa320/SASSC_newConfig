@@ -8,16 +8,28 @@ const path = require("path");
 let url = path.resolve(__dirname, "./Upload");
 /* 
 const url = './Upload'; */
-
+var arrayGIORNI = [];
 exports.ParseAllFilesInDirectory = () => {
-  var arrayGIORNI = [];
-  fs.readdirSync(url).forEach(file => {
-    var newDay = HtmlFileToJsonFile(url + "/" + file);
-    arrayGIORNI = [...arrayGIORNI, newDay];
+  /* TODO 3 ParseAllFilesInDirectory */
+
+  return new Promise((res, reg) => {
+    fs.readdirSync(url).forEach(file => {
+      var newDay = HtmlFileToJsonFile(url + "/" + file);
+      arrayGIORNI = [...arrayGIORNI, newDay];
+    });
+    /* NEW PROMISE */
+
+    FileWorker.manageArrayDays(arrayGIORNI)
+      .then(result => {
+        console.log("STEP 4 passed");
+        res(result);
+      })
+      .catch(function(error) {
+        console.log(error);
+        console.log("Alert!! step 4 NOT passed");
+        reg(error);
+      });
   });
-  /*     return arrayGIORNI; */
-  FileWorker.manageArrayDays(arrayGIORNI);
-  return;
 };
 
 var TableTH = [];
