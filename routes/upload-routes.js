@@ -54,6 +54,12 @@ var upload = multer({
 express().use(bodyParser.json());
 /* restituisce il numero di file per il mese richiesto */
 router.post("/upload", (req, res, next) => {
+  /* DELETE FILE TO NO MAKE MISTAKES ON OTHER METHODS THAT USE THAT FOLDER */
+  fs.unlink(
+    path.resolve(__dirname, "../Server/Upload\\.dontDelete"),
+    err => {}
+  );
+
   upload(req, res, function(err) {
     if (err) {
       res.json({
@@ -71,8 +77,7 @@ router.post("/upload", (req, res, next) => {
       return;
     }
 
-    /* TODO 1 main rout */
-
+    /* START OF UPDATING DB */
     UpdateDataBase()
       .then(result => {
         /* START PROMISE DELETE ALL FILES */

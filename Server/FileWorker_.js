@@ -49,6 +49,7 @@ exports.manageArrayDays = arrayDays => {
     try {
       let formattedArrayOfDays = arrayDays.map(day => {
         let formattedDay = {};
+        /* console.log(day.data); */
         formattedDay["data"] = day.data;
 
         let RadarsOBJ = {};
@@ -291,6 +292,13 @@ exports.DELETE_ALL_FILES_INSIDE_UPLOAD = () => {
             if (err) throw err;
           });
         }
+        /* CREATE FILE TO KEEP FOLDER ON GIT */
+        fs.writeFile(
+          directory + "\\.dontDelete",
+          "DONT DELETE THIS FILE",
+          "utf8",
+          err => {}
+        );
       });
       res("DIRECTORY UPLOAD CLEANED/all files inside DELETED");
     } catch (err) {
